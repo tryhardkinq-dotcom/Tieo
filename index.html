@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>HOOPFORM PRO</title>
+
+<!-- Fuentes cargadas con display=swap para evitar FOUT -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS — doble guión CORRECTO: --var
+═══════════════════════════════════════════ */
+:root {
+  --bg:      #0a0a0a;
+  --surface: #141414;
+  --surface2:#1c1c1c;
+  --border:  #282828;
+  --orange:  #FF5500;
+  --oglow:   rgba(255,85,0,.22);
+  --gold:    #FFB800;
+  --green:   #00E676;
+  --red:     #FF1744;
+  --blue:    #00B0FF;
+  --purple:  #7C3AED;
+  --txt:     #FFFFFF;
+  --txt2:    #999999;
+  --txt3:    #444444;
+  --font-display: 'Bebas Neue', 'Arial Black', Impact, sans-serif;
+  --font-body:    'Rajdhani', 'Trebuchet MS', Arial, sans-serif;
+}
+
+/* ═══════════════════════════════════════════
+   RESET
+═══════════════════════════════════════════ */
+*, *::before, *::after {
+  margin: 0; padding: 0; box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html, body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: var(--font-body);
+  height: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════
+   SCREENS
+═══════════════════════════════════════════ */
+.scr {
+  display: none;
+  height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 68px;
+  flex-direction: column;
+}
+.scr.on { display: flex; }
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════ */
+::-webkit-scrollbar { width: 0; }
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+#nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 58px;
+  background: rgba(10,10,10,.97);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  display: flex; z-index: 900;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.nb {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 3px;
+  background: none; border: none;
+  color: var(--txt3); cursor: pointer;
+  font-family: var(--font-body); font-size: 10px;
+  font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; transition: color .2s;
+}
+.nb.on { color: var(--orange); }
+.nb svg { width: 20px; height: 20px; }
+
+/* ═══════════════════════════════════════════
+   HOME — HERO
+═══════════════════════════════════════════ */
+.h-hero {
+  padding: 48px 20px 20px;
+  background: linear-gradient(180deg, #1a0800 0%, var(--bg) 100%);
+}
+.brand {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+}
+.brand-ball {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--orange);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 0 24px var(--oglow), 0 0 60px rgba(255,85,0,.1);
+}
+.brand-txt { display: flex; flex-direction: column; gap: 2px; }
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 30px; letter-spacing: 3px; line-height: 1;
+}
+.brand-sub {
+  font-size: 10px; color: var(--txt3);
+  font-weight: 700; letter-spacing: 2px;
+}
+.badge-pro {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  color: var(--orange); background: var(--oglow);
+  border: 1px solid var(--orange); border-radius: 4px;
+  padding: 2px 7px; letter-spacing: 2px;
+  margin-left: 6px; vertical-align: middle;
+}
+.live-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(255,0,0,.08);
+  border: 1px solid rgba(255,0,0,.25);
+  border-radius: 4px; padding: 5px 12px;
+  font-size: 11px; font-weight: 700;
+  color: #FF4444; letter-spacing: 2px; margin-bottom: 16px;
+}
+.ldot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #FF4444; animation: blink 1s infinite;
+}
+.h-title {
+  font-family: var(--font-display);
+  font-size: 40px; letter-spacing: 2px;
+  line-height: 1.05; margin-bottom: 8px;
+}
+.h-title em { font-style: normal; color: var(--orange); }
+.h-sub { color: var(--txt2); font-size: 13px; font-weight: 600; letter-spacing: .4px; }
+
+/* stat row */
+.stat-row {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 8px; padding: 0 20px 20px;
+}
+.sc {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 10px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.sc::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: var(--orange);
+}
+.sc-n {
+  font-family: var(--font-display);
+  font-size: 34px; color: var(--orange); line-height: 1;
+}
+.sc-l {
+  font-size: 10px; color: var(--txt3); font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; margin-top: 3px;
+}
+
+/* section title */
+.sec {
+  padding: 0 20px 10px;
+  font-family: var(--font-display);
+  font-size: 19px; letter-spacing: 2px; color: var(--txt2);
+}
+.sec em { font-style: normal; color: var(--orange); }
+
+/* ═══════════════════════════════════════════
+   ENV CARDS
+═══════════════════════════════════════════ */
+.env-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; padding: 0 20px 18px;
+}
+.env-card {
+  background: var(--surface); border: 2px solid var(--border);
+  border-radius: 14px; padding: 16px 12px; cursor: pointer;
+  position: relative; overflow: hidden; text-align: center;
+  transition: border-color .15s, transform .1s, background .15s;
+}
+.env-card:active { transform: scale(.97); }
+.env-card.sel {
+  border-color: var(--orange);
+  background: linear-gradient(135deg, rgba(255,85,0,.1), var(--surface));
+}
+.env-card.sel-blue {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, rgba(0,176,255,.1), var(--surface));
+}
+.env-ico { font-size: 30px; margin-bottom: 8px; }
+.env-name {
+  font-family: var(--font-display);
+  font-size: 18px; letter-spacing: 1px; color: var(--txt);
+}
+.env-desc {
+  font-size: 11px; color: var(--txt3);
+  margin-top: 5px; font-weight: 600; line-height: 1.5;
+}
+.env-tag {
+  display: inline-block; margin-top: 8px;
+  font-size: 9px; font-weight: 700; padding: 2px 8px;
+  border-radius: 3px; letter-spacing: 1px; text-transform: uppercase;
+}
+.env-tag.casa {
+  background: rgba(255,184,0,.15); color: var(--gold);
+  border: 1px solid rgba(255,184,0,.3);
+}
+.env-tag.cancha {
+  background: rgba(0,176,255,.15); color: var(--blue);
+  border: 1px solid rgba(0,176,255,.3);
+}
+/* Bonus features list in env cards */
+.env-feats {
+  text-align: left; margin-top: 10px;
+  font-size: 10px; color: var(--txt2); font-weight: 600;
+  line-height: 1.7; letter-spacing: .3px;
+}
+.env-feats span { display: block; }
+.env-feats span::before { content: '✓ '; color: var(--orange); }
+
+/* ═══════════════════════════════════════════
+   MODE GRID
+═══════════════════════════════════════════ */
+.mgrid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; padding: 0 20px 16px;
+}
+.mc {
+  background: var(--surface); border: 2px solid var(--border);
+  border-radius: 14px; padding: 14px 12px; cursor: pointer;
+  position: relative; overflow: hidden;
+  transition: border-color .15s, transform .1s;
+}
+.mc:active { transform: scale(.97); }
+.mc.sel {
+  border-color: var(--orange);
+  background: linear-gradient(135deg, rgba(255,85,0,.08), var(--surface));
+}
+.mc-badge {
+  position: absolute; top: 8px; right: 8px;
+  font-size: 9px; font-weight: 700; padding: 2px 6px;
+  border-radius: 3px; letter-spacing: 1px; text-transform: uppercase;
+}
+.mc-badge.pop { background: var(--orange); color: #fff; }
+.mc-badge.nw  { background: var(--gold); color: #000; }
+.mc-ico { font-size: 26px; margin-bottom: 8px; }
+.mc-name {
+  font-family: var(--font-display);
+  font-size: 17px; letter-spacing: 1px; color: var(--txt);
+}
+.mc-desc { font-size: 11px; color: var(--txt3); margin-top: 3px; font-weight: 600; }
+
+/* CTA */
+.cta {
+  margin: 0 20px 28px; border: none; border-radius: 14px;
+  padding: 17px; background: var(--orange);
+  font-family: var(--font-display); font-size: 22px;
+  letter-spacing: 3px; color: #fff; cursor: pointer;
+  width: calc(100% - 40px);
+  box-shadow: 0 6px 30px var(--oglow);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: transform .1s;
+}
+.cta:active { transform: scale(.98); }
+
+/* ═══════════════════════════════════════════
+   ANALYZE SCREEN
+═══════════════════════════════════════════ */
+.a-idle {
+  padding: 32px 20px; display: flex; flex-direction: column;
+  align-items: center; text-align: center; flex: 1;
+}
+.idle-ball {
+  width: 90px; height: 90px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,85,0,.12), rgba(255,85,0,.02));
+  border: 2px dashed rgba(255,85,0,.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px; margin: 0 auto 20px;
+}
+.idle-title {
+  font-family: var(--font-display);
+  font-size: 28px; letter-spacing: 2px; margin-bottom: 8px;
+}
+.idle-title em { font-style: normal; color: var(--orange); }
+.idle-sub {
+  color: var(--txt2); font-size: 13px; font-weight: 600;
+  margin-bottom: 22px; line-height: 1.7; max-width: 280px;
+}
+.pills {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  justify-content: center; margin-bottom: 12px;
+}
+.pill {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 99px; padding: 8px 16px;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  transition: all .15s; letter-spacing: .5px;
+  color: var(--txt2); font-family: var(--font-body);
+}
+.pill.on {
+  background: var(--orange); border-color: var(--orange); color: #fff;
+}
+
+/* Env info box */
+.env-info-box {
+  width: 100%; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 14px; margin-bottom: 18px; text-align: left;
+}
+.eib-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--txt3); margin-bottom: 8px;
+}
+.eib-feats {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.eib-feat {
+  font-size: 12px; font-weight: 600; color: var(--txt2);
+  display: flex; align-items: center; gap: 8px;
+}
+.eib-feat .dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--orange); flex-shrink: 0;
+}
+
+.big-btn {
+  border: none; border-radius: 14px; padding: 16px;
+  background: var(--orange);
+  font-family: var(--font-display); font-size: 22px;
+  letter-spacing: 3px; color: #fff; cursor: pointer; width: 100%;
+  box-shadow: 0 6px 28px var(--oglow); transition: transform .1s;
+}
+.big-btn:active { transform: scale(.98); }
+
+/* ═══════════════════════════════════════════
+   CAMERA
+═══════════════════════════════════════════ */
+#cam-wrap {
+  position: relative; width: 100%; flex: 1;
+  background: #000; display: none; overflow: hidden; min-height: 0;
+}
+#vid {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; transform: scaleX(-1);
+}
+#cvs {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  transform: scaleX(-1);
+}
+
+/* HUD top */
+.hud-top {
+  position: absolute; top: 0; left: 0; right: 0; padding: 12px 14px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  background: linear-gradient(to bottom, rgba(0,0,0,.85), transparent);
+  pointer-events: none;
+}
+.hbox {
+  background: rgba(0,0,0,.75); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.1); border-radius: 10px;
+  padding: 8px 14px; text-align: center; min-width: 64px;
+}
+.hnum {
+  font-family: var(--font-display);
+  font-size: 38px; line-height: 1; transition: color .3s;
+}
+.hlbl {
+  font-size: 9px; color: rgba(255,255,255,.4);
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.hmode {
+  background: rgba(255,85,0,.18);
+  border: 1px solid rgba(255,85,0,.35);
+  border-radius: 6px; padding: 6px 14px;
+  font-size: 11px; font-weight: 700; color: var(--orange);
+  letter-spacing: 2px; text-transform: uppercase;
+  font-family: var(--font-body);
+}
+
+/* Env HUD badge */
+.env-hud {
+  position: absolute; top: 58px; right: 12px;
+  background: rgba(0,0,0,.75); border-radius: 8px;
+  padding: 5px 10px; font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; display: none;
+  font-family: var(--font-body);
+}
+
+/* HUD bottom */
+.hud-bot {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 28px 14px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,.92), transparent);
+  pointer-events: none;
+}
+.hstatus {
+  font-family: var(--font-display); font-size: 17px;
+  letter-spacing: 1.5px; margin-bottom: 8px; min-height: 24px;
+}
+.tagrow { display: flex; gap: 5px; flex-wrap: wrap; }
+.tag {
+  font-size: 11px; font-weight: 700;
+  padding: 4px 9px; border-radius: 4px; letter-spacing: .5px;
+  font-family: var(--font-body);
+}
+.ok { background: rgba(0,230,118,.12); color: var(--green); border: 1px solid rgba(0,230,118,.3); }
+.er { background: rgba(255,23,68,.12);  color: var(--red);   border: 1px solid rgba(255,23,68,.3); }
+.wn { background: rgba(255,85,0,.12);   color: #FF8800;      border: 1px solid rgba(255,85,0,.3); }
+
+/* BPM box */
+#bpm-box {
+  position: absolute; top: 58px; left: 12px;
+  background: rgba(0,0,0,.75); border: 1px solid rgba(0,176,255,.25);
+  border-radius: 10px; padding: 8px 12px; display: none;
+}
+.bpm-n { font-family: var(--font-display); font-size: 30px; color: var(--blue); }
+.bpm-l { font-size: 9px; color: rgba(255,255,255,.4); letter-spacing: 1px; }
+
+/* Shot flash */
+#sflash {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; opacity: 0; transition: opacity .08s;
+  border: 3px solid var(--gold);
+}
+#sflash.on { opacity: 1; }
+.stxt {
+  font-family: var(--font-display);
+  font-size: 52px; color: var(--gold);
+  letter-spacing: 4px; text-shadow: 0 0 40px var(--gold);
+  animation: pop .4s ease-out;
+}
+
+/* Confidence bar */
+.conf-bar-wrap {
+  position: absolute; bottom: 90px; left: 14px; right: 14px;
+  pointer-events: none; display: none;
+}
+.conf-bar-bg {
+  background: rgba(255,255,255,.1); border-radius: 4px;
+  height: 4px; overflow: hidden;
+}
+.conf-bar-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, var(--orange), var(--gold));
+  transition: width .3s;
+}
+.conf-lbl {
+  font-size: 9px; color: rgba(255,255,255,.4);
+  letter-spacing: 1px; margin-bottom: 4px; font-family: var(--font-body);
+  font-weight: 700; text-transform: uppercase;
+}
+
+/* Loader */
+#loader {
+  position: absolute; inset: 0; background: rgba(0,0,0,.88);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px; z-index: 20;
+}
+.ring {
+  width: 52px; height: 52px;
+  border: 3px solid rgba(255,85,0,.2);
+  border-top-color: var(--orange);
+  border-radius: 50%; animation: spin .7s linear infinite;
+}
+.ltxt {
+  color: var(--txt2); font-size: 12px;
+  font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  font-family: var(--font-body);
+}
+
+/* Cam controls */
+.cam-ctrls {
+  display: flex; gap: 10px;
+  padding: 10px 16px 0; background: var(--bg);
+}
+.ctrl {
+  flex: 1; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px; color: var(--txt2); cursor: pointer;
+  font-family: var(--font-body); font-size: 13px;
+  font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  transition: all .15s;
+}
+.ctrl.danger { color: var(--red); border-color: rgba(255,23,68,.25); }
+.ctrl.prim   { background: var(--orange); border-color: var(--orange); color: #fff; }
+
+/* Error box */
+.errbox {
+  background: rgba(255,23,68,.08);
+  border: 1px solid rgba(255,23,68,.3);
+  border-radius: 10px; padding: 12px 16px;
+  margin: 16px 20px; font-size: 13px;
+  color: var(--red); font-weight: 600; display: none;
+}
+
+/* ═══════════════════════════════════════════
+   TRAIN SCREEN
+═══════════════════════════════════════════ */
+.t-head { padding: 32px 20px 18px; }
+.t-title {
+  font-family: var(--font-display);
+  font-size: 36px; letter-spacing: 2px;
+}
+.t-title em { font-style: normal; color: var(--orange); }
+.t-sub { color: var(--txt2); font-size: 13px; font-weight: 600; letter-spacing: .5px; margin-top: 3px; }
+.t-body { padding: 0 20px 32px; }
+
+/* Active drill */
+#adrill {
+  background: var(--surface); border: 1px solid var(--orange);
+  border-radius: 16px; padding: 16px; margin-bottom: 18px; display: none;
+}
+.dcam {
+  position: relative; width: 100%; aspect-ratio: 4/3;
+  background: #000; border-radius: 10px; overflow: hidden;
+  margin-bottom: 12px; display: none;
+}
+.dcam video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; transform: scaleX(-1);
+}
+.dcam canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  transform: scaleX(-1);
+}
+.dcam-bot {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 10px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,.9), transparent);
+}
+.dcam-stat {
+  font-family: var(--font-display);
+  font-size: 14px; letter-spacing: 1px; margin-bottom: 5px;
+}
+.rep-row {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 8px;
+}
+.rep-big {
+  font-family: var(--font-display);
+  font-size: 62px; color: var(--orange); line-height: 1;
+}
+.rep-rt { text-align: right; }
+.rep-name { font-family: var(--font-display); font-size: 17px; letter-spacing: 1px; }
+.rep-tot { font-size: 11px; color: var(--txt3); font-weight: 700; }
+.prog-bg {
+  background: var(--border); border-radius: 99px;
+  height: 5px; margin-bottom: 12px; overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--orange), var(--gold));
+  border-radius: 99px; transition: width .3s;
+}
+.dinstr {
+  background: rgba(255,85,0,.07);
+  border: 1px solid rgba(255,85,0,.18);
+  border-radius: 8px; padding: 10px 12px;
+  font-size: 13px; font-weight: 600; line-height: 1.6; margin-bottom: 12px;
+}
+.dbtns { display: flex; gap: 8px; }
+.ddone {
+  flex: 2; background: var(--orange); border: none;
+  border-radius: 10px; padding: 13px;
+  font-family: var(--font-body); font-size: 14px;
+  font-weight: 700; letter-spacing: 1px; color: #fff;
+  cursor: pointer; text-transform: uppercase;
+}
+.dstop {
+  flex: 1; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 13px; font-family: var(--font-body);
+  font-size: 14px; font-weight: 700; color: var(--txt3); cursor: pointer;
+}
+.cat-lbl {
+  font-size: 11px; font-weight: 700; color: var(--txt3);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: 16px 0 8px; display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-body);
+}
+.dc {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 12px; cursor: pointer;
+  transition: border-color .15s, transform .1s;
+}
+.dc:active { transform: scale(.98); border-color: var(--orange); }
+.di {
+  width: 46px; height: 46px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.di.s  { background: rgba(255,85,0,.1); }
+.di.d  { background: rgba(0,176,255,.1); }
+.di.df { background: rgba(0,230,118,.1); }
+.di-info { flex: 1; }
+.di-name { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--txt); }
+.di-meta { font-size: 11px; color: var(--txt3); margin-top: 2px; font-weight: 600; }
+.diff {
+  font-size: 9px; font-weight: 700; padding: 3px 8px;
+  border-radius: 3px; letter-spacing: 1px; text-transform: uppercase;
+  flex-shrink: 0; font-family: var(--font-body);
+}
+.easy { background: rgba(0,230,118,.12); color: var(--green); }
+.med  { background: rgba(255,136,0,.12); color: #FF8800; }
+.hard { background: rgba(255,23,68,.12);  color: var(--red); }
+
+/* ═══════════════════════════════════════════
+   STATS SCREEN
+═══════════════════════════════════════════ */
+.s-head { padding: 32px 20px 18px; }
+.s-title { font-family: var(--font-display); font-size: 36px; letter-spacing: 2px; }
+.s-title em { font-style: normal; color: var(--orange); }
+.s-body { padding: 0 20px 32px; }
+.bgrid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 14px;
+}
+.bs {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px; position: relative; overflow: hidden;
+}
+.bs::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.bs.a::before { background: linear-gradient(90deg, var(--orange), #FF8800); }
+.bs.b::before { background: linear-gradient(90deg, var(--green), var(--blue)); }
+.bs.c::before { background: linear-gradient(90deg, var(--gold), var(--orange)); }
+.bs.d::before { background: linear-gradient(90deg, var(--blue), var(--purple)); }
+.bs-n { font-family: var(--font-display); font-size: 44px; line-height: 1; }
+.bs.a .bs-n { color: var(--orange); }
+.bs.b .bs-n { color: var(--green); }
+.bs.c .bs-n { color: var(--gold); }
+.bs.d .bs-n { color: var(--blue); }
+.bs-l { font-size: 10px; color: var(--txt3); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.chart-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px; margin-bottom: 14px;
+}
+.chart-title {
+  font-size: 13px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--txt2); margin-bottom: 16px;
+  font-family: var(--font-body);
+}
+.barchart {
+  display: flex; align-items: flex-end;
+  gap: 6px; height: 80px;
+}
+.bcol { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bar {
+  width: 100%; border-radius: 4px 4px 0 0; min-height: 4px;
+  transition: height .5s cubic-bezier(.34,1.56,.64,1);
+}
+.blbl { font-size: 9px; color: var(--txt3); font-weight: 700; font-family: var(--font-body); }
+.si {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 13px 14px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 12px;
+}
+.si-ico { font-size: 20px; }
+.si-info { flex: 1; }
+.si-t { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.si-m { font-size: 11px; color: var(--txt3); margin-top: 2px; font-weight: 600; }
+.si-s { font-family: var(--font-display); font-size: 30px; color: var(--orange); }
+
+/* ═══════════════════════════════════════════
+   VOICE BADGE
+═══════════════════════════════════════════ */
+#vbadge {
+  position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,230,118,.12); border: 1px solid rgba(0,230,118,.35);
+  border-radius: 99px; padding: 6px 18px;
+  font-size: 11px; font-weight: 700; color: var(--green);
+  letter-spacing: 1px; z-index: 1000; display: none;
+  align-items: center; gap: 7px; white-space: nowrap;
+  max-width: 90vw; overflow: hidden; text-overflow: ellipsis;
+  font-family: var(--font-body);
+}
+#vbadge.on { display: flex; }
+.vdot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green); flex-shrink: 0; animation: blink .7s infinite;
+}
+
+/* ═══════════════════════════════════════════
+   KEYFRAMES
+═══════════════════════════════════════════ */
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+@keyframes spin   { to{transform:rotate(360deg)} }
+@keyframes pop    { from{transform:scale(.3);opacity:0} to{transform:scale(1);opacity:1} }
+@keyframes pulseO { 0%,100%{box-shadow:0 0 0 0 var(--oglow)} 50%{box-shadow:0 0 0 8px transparent} }
+</style>
+</head>
+<body>
+
+<!-- ── Voice badge ── -->
+<div id="vbadge"><div class="vdot"></div><span id="vtxt">...</span></div>
+
+<!-- ════════════════════════════════
+     HOME
+════════════════════════════════ -->
+<div id="home-scr" class="scr on">
+  <div class="h-hero">
+    <div class="brand">
+      <div class="brand-ball">🏀</div>
+      <div class="brand-txt">
+        <div>
+          <span class="brand-name">HOOPFORM</span>
+          <span class="badge-pro">PRO</span>
+        </div>
+        <div class="brand-sub">ENTRENADOR NBA CON IA</div>
+      </div>
+    </div>
+    <div class="live-pill"><div class="ldot"></div> ANÁLISIS EN VIVO</div>
+    <div class="h-title">LLEVA TU JUEGO<br>AL <em>SIGUIENTE NIVEL</em></div>
+    <div class="h-sub" style="margin-top:6px">Detección de postura · Voz en español · Feedback real</div>
+  </div>
+
+  <div class="stat-row" style="margin-top:6px">
+    <div class="sc"><div class="sc-n" id="h-sess">0</div><div class="sc-l">Sesiones</div></div>
+    <div class="sc"><div class="sc-n" id="h-shots">0</div><div class="sc-l">Tiros</div></div>
+    <div class="sc"><div class="sc-n" id="h-avg">—</div><div class="sc-l">Promedio</div></div>
+  </div>
+
+  <!-- ENV CARDS -->
+  <div class="sec">ENTORNO DE <em>JUEGO</em></div>
+  <div class="env-row">
+    <div class="env-card sel" id="env-casa" onclick="pickEnv('casa',this)">
+      <div class="env-ico">🏠</div>
+      <div class="env-name">CASA</div>
+      <div class="env-desc">Espacio reducido · Sin aro · Mecánica pura</div>
+      <div class="env-feats">
+        <span>Umbrales más amplios</span>
+        <span>Correcciones básicas</span>
+        <span>Foco en técnica</span>
+        <span>Ideal para principiantes</span>
+      </div>
+      <span class="env-tag casa">MECÁNICA</span>
+    </div>
+    <div class="env-card" id="env-cancha" onclick="pickEnv('cancha',this)">
+      <div class="env-ico">🏟️</div>
+      <div class="env-name">CANCHA</div>
+      <div class="env-desc">Espacio completo · Con aro · Nivel pro</div>
+      <div class="env-feats">
+        <span>Estándares NBA</span>
+        <span>Detección de tiros strict</span>
+        <span>BPM dribble avanzado</span>
+        <span>Análisis de scouting</span>
+      </div>
+      <span class="env-tag cancha">NIVEL PRO</span>
+    </div>
+  </div>
+
+  <!-- MODE GRID -->
+  <div class="sec">MODOS DE <em>ANÁLISIS</em></div>
+  <div class="mgrid">
+    <div class="mc sel" id="mc-shoot" onclick="pickMode('shoot',this)">
+      <span class="mc-badge pop">POPULAR</span>
+      <div class="mc-ico">🎯</div>
+      <div class="mc-name">TIRO</div>
+      <div class="mc-desc">Mecánica completa</div>
+    </div>
+    <div class="mc" id="mc-dribble" onclick="pickMode('dribble',this)">
+      <div class="mc-ico">⚡</div>
+      <div class="mc-name">DRIBBLE</div>
+      <div class="mc-desc">Ritmo y control</div>
+    </div>
+    <div class="mc" id="mc-defense" onclick="pickMode('defense',this)">
+      <div class="mc-ico">🛡️</div>
+      <div class="mc-name">DEFENSA</div>
+      <div class="mc-desc">Posición y desplazamiento</div>
+    </div>
+    <div class="mc" id="mc-ft" onclick="pickMode('ft',this)">
+      <span class="mc-badge nw">NUEVO</span>
+      <div class="mc-ico">🌊</div>
+      <div class="mc-name">FOLLOW-THROUGH</div>
+      <div class="mc-desc">Final del tiro</div>
+    </div>
+  </div>
+  <button class="cta" onclick="goTo('analyze')">⚡ INICIAR SESIÓN</button>
+</div>
+
+<!-- ════════════════════════════════
+     ANALYZE
+════════════════════════════════ -->
+<div id="analyze-scr" class="scr">
+  <div class="errbox" id="errbox"></div>
+
+  <div class="a-idle" id="a-idle">
+    <div class="idle-ball">🏀</div>
+    <div class="idle-title">MODO <em id="idle-mode">TIRO</em></div>
+    <p class="idle-sub">La IA detecta tu cuerpo en tiempo real<br>y te habla en español para corregirte</p>
+
+    <!-- mode pills -->
+    <div class="pills">
+      <div class="pill on" onclick="pillMode(this,'shoot')">🎯 Tiro</div>
+      <div class="pill" onclick="pillMode(this,'dribble')">⚡ Dribble</div>
+      <div class="pill" onclick="pillMode(this,'defense')">🛡️ Defensa</div>
+      <div class="pill" onclick="pillMode(this,'ft')">🌊 Follow-through</div>
+    </div>
+
+    <!-- env pills -->
+    <div class="pills" style="margin-bottom:14px">
+      <div class="pill on" id="apill-casa"   onclick="pillEnv(this,'casa')">🏠 Casa</div>
+      <div class="pill"   id="apill-cancha"  onclick="pillEnv(this,'cancha')">🏟️ Cancha</div>
+    </div>
+
+    <!-- env info -->
+    <div class="env-info-box" id="env-info-box">
+      <div class="eib-title" id="eib-title">MODO CASA</div>
+      <div class="eib-feats" id="eib-feats"></div>
+    </div>
+
+    <button class="big-btn" onclick="startCam()">📷 INICIAR ANÁLISIS</button>
+  </div>
+
+  <!-- Camera -->
+  <div id="cam-wrap">
+    <video id="vid" playsinline muted></video>
+    <canvas id="cvs"></canvas>
+    <div id="loader"><div class="ring"></div><div class="ltxt">CARGANDO IA...</div></div>
+
+    <div class="hud-top">
+      <div class="hbox">
+        <div class="hnum" id="score-num" style="color:var(--orange)">--</div>
+        <div class="hlbl">FORMA</div>
+      </div>
+      <div class="hmode" id="mode-badge">TIRO</div>
+      <div class="hbox">
+        <div class="hnum" id="shot-count" style="color:var(--gold)">0</div>
+        <div class="hlbl" id="shot-lbl">TIROS</div>
+      </div>
+    </div>
+
+    <div class="bpm-box" id="bpm-box">
+      <div class="bpm-n" id="bpm-val">--</div>
+      <div class="bpm-l">BPM</div>
+    </div>
+
+    <div class="env-hud" id="env-hud"></div>
+
+    <!-- Confidence bar -->
+    <div class="conf-bar-wrap" id="conf-bar-wrap">
+      <div class="conf-lbl">CONFIANZA POSE</div>
+      <div class="conf-bar-bg"><div class="conf-bar-fill" id="conf-fill" style="width:0%"></div></div>
+    </div>
+
+    <div id="sflash"><div class="stxt" id="stxt">🏀 ¡TIRO!</div></div>
+
+    <div class="hud-bot">
+      <div class="hstatus" id="status-txt">DETECTANDO POSTURA...</div>
+      <div class="tagrow" id="tags"></div>
+    </div>
+  </div>
+
+  <div class="cam-ctrls" id="cam-ctrls" style="display:none">
+    <button class="ctrl danger" onclick="stopCam()">✕ DETENER</button>
+    <button class="ctrl prim"   onclick="saveSession()">💾 GUARDAR</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     TRAIN
+════════════════════════════════ -->
+<div id="train-scr" class="scr">
+  <div class="t-head">
+    <div class="t-title">ENTRE<em>NAMIENTO</em></div>
+    <div class="t-sub">EJERCICIOS GUIADOS CON IA EN VIVO</div>
+  </div>
+  <div class="t-body">
+    <div id="adrill">
+      <div class="dcam" id="dcam">
+        <video id="dvid" playsinline muted></video>
+        <canvas id="dcvs"></canvas>
+        <div class="dcam-bot">
+          <div class="dcam-stat" id="dcam-stat" style="color:var(--orange)">DETECTANDO...</div>
+          <div class="tagrow" id="dtags"></div>
+        </div>
+      </div>
+      <div class="rep-row">
+        <div class="rep-big" id="rep-num">0</div>
+        <div class="rep-rt">
+          <div class="rep-name" id="drill-name-txt">EJERCICIO</div>
+          <div class="rep-tot" id="drill-prog">0 / 0</div>
+        </div>
+      </div>
+      <div class="prog-bg"><div class="prog-fill" id="drill-bar" style="width:0%"></div></div>
+      <div class="dinstr" id="drill-instr">...</div>
+      <div class="dbtns">
+        <button class="ddone" id="ddone-btn" onclick="repDone()">✓ REP COMPLETADA</button>
+        <button class="dstop" onclick="stopDrill()">✕ PARAR</button>
+      </div>
+    </div>
+
+    <div class="cat-lbl">🎯 TIRO</div>
+    <div class="dc" onclick="startDrill('catch_shoot')">
+      <div class="di s">🎯</div>
+      <div class="di-info"><div class="di-name">Catch &amp; Shoot</div><div class="di-meta">10 tiros · recepción y lanzamiento</div></div>
+      <span class="diff easy">FÁCIL</span>
+    </div>
+    <div class="dc" onclick="startDrill('form_shoot')">
+      <div class="di s">🏀</div>
+      <div class="di-info"><div class="di-name">Form Shooting</div><div class="di-meta">15 tiros · solo mecánica del brazo</div></div>
+      <span class="diff easy">FÁCIL</span>
+    </div>
+    <div class="dc" onclick="startDrill('midrange')">
+      <div class="di s">📐</div>
+      <div class="di-info"><div class="di-name">Mid-Range Series</div><div class="di-meta">20 tiros · media distancia</div></div>
+      <span class="diff med">MEDIO</span>
+    </div>
+    <div class="dc" onclick="startDrill('stepback')">
+      <div class="di s">💫</div>
+      <div class="di-info"><div class="di-name">Step-Back Jumper</div><div class="di-meta">12 tiros · estilo Luka / Harden</div></div>
+      <span class="diff hard">DIFÍCIL</span>
+    </div>
+
+    <div class="cat-lbl">⚡ DRIBBLE</div>
+    <div class="dc" onclick="startDrill('drib_basic')">
+      <div class="di d">⚡</div>
+      <div class="di-info"><div class="di-name">Dribble Básico</div><div class="di-meta">60 seg · control ambas manos</div></div>
+      <span class="diff easy">FÁCIL</span>
+    </div>
+    <div class="dc" onclick="startDrill('crossover')">
+      <div class="di d">🔀</div>
+      <div class="di-info"><div class="di-name">Crossover Series</div><div class="di-meta">20 cruces · velocidad y control</div></div>
+      <span class="diff med">MEDIO</span>
+    </div>
+    <div class="dc" onclick="startDrill('behind')">
+      <div class="di d">🌀</div>
+      <div class="di-info"><div class="di-name">Behind-the-Back</div><div class="di-meta">15 reps · dribble por la espalda</div></div>
+      <span class="diff hard">DIFÍCIL</span>
+    </div>
+
+    <div class="cat-lbl">🛡️ DEFENSA</div>
+    <div class="dc" onclick="startDrill('def_stance')">
+      <div class="di df">🛡️</div>
+      <div class="di-info"><div class="di-name">Posición Defensiva</div><div class="di-meta">45 seg · mantén la postura</div></div>
+      <span class="diff easy">FÁCIL</span>
+    </div>
+    <div class="dc" onclick="startDrill('lateral')">
+      <div class="di df">↔️</div>
+      <div class="di-info"><div class="di-name">Lateral Slides</div><div class="di-meta">3 series · desplazamiento lateral</div></div>
+      <span class="diff med">MEDIO</span>
+    </div>
+    <div class="dc" onclick="startDrill('closeout')">
+      <div class="di df">🚀</div>
+      <div class="di-info"><div class="di-name">Close-Out</div><div class="di-meta">10 reps · cierre al tirador</div></div>
+      <span class="diff hard">DIFÍCIL</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     STATS
+════════════════════════════════ -->
+<div id="stats-scr" class="scr">
+  <div class="s-head">
+    <div class="s-title">ESTA<em>DÍSTICAS</em></div>
+  </div>
+  <div class="s-body">
+    <div class="bgrid">
+      <div class="bs a"><div class="bs-n" id="st-sess">0</div><div class="bs-l">Sesiones</div></div>
+      <div class="bs b"><div class="bs-n" id="st-shots">0</div><div class="bs-l">Tiros</div></div>
+      <div class="bs c"><div class="bs-n" id="st-avg">—</div><div class="bs-l">Promedio</div></div>
+      <div class="bs d"><div class="bs-n" id="st-best">—</div><div class="bs-l">Mejor sesión</div></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">📈 PROGRESO DE FORMA (últimas 7)</div>
+      <div class="barchart" id="bar-chart">
+        <div style="color:var(--txt3);font-size:13px;font-weight:700;padding:20px 0;width:100%;text-align:center">Sin sesiones aún</div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">📋 HISTORIAL</div>
+      <div id="sess-list">
+        <div style="color:var(--txt3);font-size:13px;font-weight:700;padding:20px 0;text-align:center">No hay sesiones guardadas</div>
+      </div>
+    </div>
+    <button onclick="clearStats()" style="background:none;border:1px solid rgba(255,23,68,.2);color:var(--red);font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:1px;padding:10px;border-radius:8px;width:100%;cursor:pointer;text-transform:uppercase">
+      🗑 BORRAR HISTORIAL
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     NAV
+════════════════════════════════ -->
+<nav id="nav">
+  <button class="nb on" id="nb-home" onclick="goTo('home')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+    INICIO
+  </button>
+  <button class="nb" id="nb-analyze" onclick="goTo('analyze')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.89L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+    ANALIZAR
+  </button>
+  <button class="nb" id="nb-train" onclick="goTo('train')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    ENTRENAR
+  </button>
+  <button class="nb" id="nb-stats" onclick="goTo('stats')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+    STATS
+  </button>
+</nav>
+
+<!-- MediaPipe — defer para no bloquear render -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous" defer></script>
+
+<script>
+'use strict';
+
+/* ═══════════════════════════════════════════════════════
+   ESTADO GLOBAL
+═══════════════════════════════════════════════════════ */
+let mode    = 'shoot';
+let env     = 'casa';
+let mainCam = null, mainPose = null;
+let drillCam = null, drillPose = null;
+let analyzing = false;
+
+let sessShots = 0, sessScores = [], sessActive = false;
+let frameN = 0;
+let smoothed = null;
+
+// Persistencia
+let sessions = [];
+try { sessions = JSON.parse(localStorage.getItem('hf4') || '[]'); } catch(e) { sessions = []; }
+
+// Drill
+let activeDrill = null, drillReps = 0, drillTick = null;
+
+/* ═══════════════════════════════════════════════════════
+   UMBRALES POR ENTORNO
+   Casa  = más permisivo (sin aro, espacio pequeño)
+   Cancha = estándar NBA (estricto)
+═══════════════════════════════════════════════════════ */
+const ENV_CONFIG = {
+  casa: {
+    label: 'MODO CASA 🏠',
+    color: 'var(--gold)',
+    feats: [
+      'Umbrales de ángulo amplios (+15°)',
+      'Detección de tiro más sensible',
+      'Correcciones progresivas',
+      'Ideal para practicar mecánica',
+    ],
+    // Tiro
+    elbowMin: 55,  elbowMax: 155, flare: 0.15, kneeMax: 175,
+    // Cooldown entre tiros (ms) — más corto en casa
+    shotCooldown: 1400,
+    // Dribble
+    dribKneeMax: 173, dribBaseMin: 0.10,
+    dribMinAmp: 0.018,   // amplitud mínima del movimiento de muñeca
+    dribMinInterval: 220, // ms mínimo entre botes
+    // Defensa
+    defKneeMax: 172, defBaseMin: 0.12,
+    // Follow-through
+    ftExtMin: 135,
+    // Visibilidad mínima de landmarks
+    visMin: 0.45,
+    // Score bonificación entorno (casa es más fácil conseguir puntos)
+    scoreMod: +0.5,
+  },
+  cancha: {
+    label: 'MODO CANCHA 🏟️',
+    color: 'var(--blue)',
+    feats: [
+      'Estándares NBA estrictos',
+      'Ángulos exactos de tiro pro',
+      'Detección anti-falsos positivos',
+      'Scouting de nivel profesional',
+    ],
+    // Tiro
+    elbowMin: 68,  elbowMax: 142, flare: 0.10, kneeMax: 168,
+    shotCooldown: 1800,
+    // Dribble
+    dribKneeMax: 164, dribBaseMin: 0.13,
+    dribMinAmp: 0.025,
+    dribMinInterval: 260,
+    // Defensa
+    defKneeMax: 160, defBaseMin: 0.16,
+    // Follow-through
+    ftExtMin: 148,
+    // Visibilidad
+    visMin: 0.50,
+    scoreMod: 0,
+  },
+};
+
+/* ═══════════════════════════════════════════════════════
+   MAPA DE EJERCICIOS
+═══════════════════════════════════════════════════════ */
+const DRILLS = {
+  catch_shoot : { name:'Catch & Shoot',      reps:10, mode:'shoot',   icon:'🎯', instr:'Simula recibir un pase. Planta los pies y lanza. Rodillas dobladas, codo adentro, follow-through completo.' },
+  form_shoot  : { name:'Form Shooting',       reps:15, mode:'shoot',   icon:'🏀', instr:'Sin saltar. Trabaja solo la mecánica. Codo a 90°, muñeca snap al soltar.' },
+  midrange    : { name:'Mid-Range Series',    reps:20, mode:'shoot',   icon:'📐', instr:'Usa las piernas. El impulso nace desde las caderas, no solo el brazo.' },
+  stepback    : { name:'Step-Back Jumper',    reps:12, mode:'shoot',   icon:'💫', instr:'Paso atrás explosivo. Core firme. Equilibrio antes de lanzar.' },
+  drib_basic  : { name:'Dribble Básico',      reps:60, mode:'dribble', icon:'⚡', instr:'Alterna mano derecha e izquierda. Vista al frente. Posición baja.', timer:true },
+  crossover   : { name:'Crossover Series',    reps:20, mode:'dribble', icon:'🔀', instr:'Cruza el balón explosivo y bajo. No debe subir más que la cadera.' },
+  behind      : { name:'Behind-the-Back',     reps:15, mode:'dribble', icon:'🌀', instr:'Pasa el balón por la espalda. Empieza lento, luego acelera.' },
+  def_stance  : { name:'Posición Defensiva',  reps:45, mode:'defense', icon:'🛡️', instr:'Rodillas dobladas, espalda recta, manos activas. Pies más anchos que los hombros.', timer:true },
+  lateral     : { name:'Lateral Slides',      reps:3,  mode:'defense', icon:'↔️', instr:'5 pasos rápidos a cada lado. No cruces los pies. Mantén la posición baja.' },
+  closeout    : { name:'Close-Out',           reps:10, mode:'defense', icon:'🚀', instr:'Corre hacia el tirador, frena con dos pasos, manos arriba. No saltes con el pump fake.' },
+};
+
+/* ═══════════════════════════════════════════════════════
+   HELPERS DE GEOMETRÍA
+═══════════════════════════════════════════════════════ */
+function LM(lm, i) { return lm[i]; }
+
+function ang(a, b, c) {
+  const ax = a.x - b.x, ay = a.y - b.y;
+  const cx = c.x - b.x, cy = c.y - b.y;
+  const dot = ax*cx + ay*cy;
+  const mag = Math.hypot(ax,ay) * Math.hypot(cx,cy);
+  if (mag < 1e-9) return 0;
+  return Math.acos(Math.max(-1, Math.min(1, dot/mag))) * 180 / Math.PI;
+}
+
+function dist(a, b) {
+  return Math.hypot(a.x-b.x, a.y-b.y);
+}
+
+/* ═══════════════════════════════════════════════════════
+   SMOOTHING EXPONENCIAL  α = 0.72
+═══════════════════════════════════════════════════════ */
+function smooth(lm) {
+  const A = 0.72;
+  if (!smoothed || smoothed.length !== lm.length) {
+    smoothed = lm.map(p => ({ ...p }));
+    return smoothed;
+  }
+  smoothed = lm.map((p, i) => ({
+    ...p,
+    x: smoothed[i].x * A + p.x * (1-A),
+    y: smoothed[i].y * A + p.y * (1-A),
+  }));
+  return smoothed;
+}
+
+/* ═══════════════════════════════════════════════════════
+   GATE DE VISIBILIDAD
+   Exige que los landmarks clave sean visibles
+═══════════════════════════════════════════════════════ */
+function visible(lm) {
+  const T = ENV_CONFIG[env];
+  const required = [11,12,13,14,15,16,23,24,25,26,27,28];
+  return required.every(i => lm[i] && lm[i].visibility > T.visMin);
+}
+
+function avgVisibility(lm) {
+  const idxs = [11,12,13,14,15,16,23,24,25,26,27,28];
+  return idxs.reduce((s,i) => s + (lm[i] ? lm[i].visibility : 0), 0) / idxs.length;
+}
+
+/* ═══════════════════════════════════════════════════════
+   VOZ (cola anti-saturación)
+═══════════════════════════════════════════════════════ */
+const voiceQ = [];
+let voiceBusy = false, lastVoiceT = 0;
+
+function speak(txt) {
+  if (!window.speechSynthesis) return;
+  // Nunca repetir el mismo mensaje dos veces seguidas
+  if (voiceQ.length && voiceQ[voiceQ.length-1] === txt) return;
+  // Si la cola tiene más de 2 mensajes, descartar el nuevo (evita saturación)
+  if (voiceQ.length > 2) return;
+  voiceQ.push(txt);
+  if (!voiceBusy) _flushVoice();
+}
+
+function _flushVoice() {
+  if (!voiceQ.length) { voiceBusy = false; return; }
+  voiceBusy = true;
+  const txt = voiceQ.shift();
+  const u = new SpeechSynthesisUtterance(txt);
+  u.lang = 'es-ES'; u.rate = 0.96; u.pitch = 1.02; u.volume = 1;
+
+  // Seleccionar la mejor voz en español
+  const voices = speechSynthesis.getVoices();
+  const preferred = ['es-ES','es-MX','es-US','es-AR','es'];
+  let sv = null;
+  for (const lang of preferred) {
+    sv = voices.find(v => v.lang === lang || v.lang.startsWith(lang));
+    if (sv) break;
+  }
+  if (sv) u.voice = sv;
+
+  const vb = document.getElementById('vbadge');
+  const vt = document.getElementById('vtxt');
+  vb.classList.add('on'); vt.textContent = txt;
+
+  u.onend  = () => { vb.classList.remove('on'); voiceBusy = false; setTimeout(_flushVoice, 180); };
+  u.onerror = () => { voiceBusy = false; _flushVoice(); };
+  speechSynthesis.speak(u);
+}
+
+/* ═══════════════════════════════════════════════════════
+   MÁQUINA DE ESTADOS PARA TIRO
+   Fases: idle → load → lift → peak → release
+   Evita falsos positivos exigiendo TODA la secuencia
+═══════════════════════════════════════════════════════ */
+const shotSM = {
+  phase: 'idle',
+  cooldown: false,
+  _loadT: 0,   // tiempo que lleva en fase load
+  _liftT: 0,
+};
+
+let lastShotT = 0;
+
+function detectShot(lm) {
+  if (mode !== 'shoot' && mode !== 'ft') return false;
+  const T = ENV_CONFIG[env];
+
+  // Usar hombro, codo y muñeca del brazo dominante (derecho = índices 12,14,16)
+  const sh = LM(lm,12), el = LM(lm,14), wr = LM(lm,16);
+  if (!sh || !el || !wr) return false;
+  if (sh.visibility < T.visMin || el.visibility < T.visMin || wr.visibility < T.visMin) return false;
+
+  const ea       = ang(sh, el, wr);
+  const wrAboveEl = wr.y < el.y - 0.02;  // muñeca claramente sobre codo
+  const wrAboveSh = wr.y < sh.y;          // muñeca sobre hombro (fase alta)
+  const ext      = ea > 148;              // brazo bien extendido
+
+  const now = Date.now();
+
+  switch (shotSM.phase) {
+    case 'idle':
+      // Entrar en carga: codo doblado entre ~50-120°
+      if (ea > 50 && ea < 120) {
+        shotSM.phase = 'load';
+        shotSM._loadT = now;
+      }
+      break;
+
+    case 'load':
+      // Debe mantener la carga al menos 150ms para evitar falsos positivos por movimiento rápido
+      if (now - shotSM._loadT < 150) break;
+      // Cancelar si el codo se abre demasiado rápido sin pasar por lift
+      if (ea > 155) { shotSM.phase = 'idle'; break; }
+      // Progreso: la muñeca sube hacia el codo
+      if (wrAboveEl) {
+        shotSM.phase = 'lift';
+        shotSM._liftT = now;
+      }
+      break;
+
+    case 'lift':
+      // Cancelar si baja demasiado
+      if (!wrAboveEl && now - shotSM._liftT > 400) { shotSM.phase = 'idle'; break; }
+      // Peak: muñeca sobre hombro + brazo extendido
+      if (wrAboveSh && ext) {
+        shotSM.phase = 'release';
+        shotSM._releaseT = now;
+      }
+      break;
+
+    case 'release':
+      // Espera un poco para confirmar (evita tiros fantasma)
+      if (now - shotSM._releaseT > 180) {
+        shotSM.phase = 'idle';
+        if (!shotSM.cooldown && now - lastShotT > T.shotCooldown) {
+          shotSM.cooldown = true;
+          lastShotT = now;
+          setTimeout(() => { shotSM.cooldown = false; }, T.shotCooldown);
+          return true; // ✅ TIRO CONFIRMADO
+        }
+      }
+      // Si baja antes de tiempo, cancelar
+      if (!wrAboveSh && now - shotSM._releaseT < 180) { shotSM.phase = 'idle'; }
+      break;
+  }
+  return false;
+}
+
+/* ═══════════════════════════════════════════════════════
+   DETECCIÓN DE DRIBBLE
+   Anti-falsos: exige amplitud mínima de movimiento
+   y intervalo mínimo entre botes
+═══════════════════════════════════════════════════════ */
+const dribSM = {
+  phase: 'neutral',
+  reps: 0,
+  lastRepT: 0,
+  hist: [],
+  peakY: null,   // valor Y más alto (mano arriba)
+  valleyY: null, // valor Y más bajo (mano abajo)
+};
+
+let dribBpm = 0, lastDribT = 0;
+
+function detectDribble(lm) {
+  if (mode !== 'dribble') return;
+  const T = ENV_CONFIG[env];
+
+  // Tomar la mano más baja (la que hace el dribble)
+  const rW = LM(lm,16), lW = LM(lm,15);
+  if (!rW || !lW) return;
+  const wr = rW.y > lW.y ? rW : lW; // mayor Y = más abajo en pantalla
+  const y = wr.y;
+
+  dribSM.hist.push(y);
+  if (dribSM.hist.length > 12) dribSM.hist.shift();
+  if (dribSM.hist.length < 8) return;
+
+  // Calcular peak y valley del buffer
+  const maxY = Math.max(...dribSM.hist);
+  const minY = Math.min(...dribSM.hist);
+  const amp  = maxY - minY; // amplitud del movimiento
+
+  // Si la amplitud es muy pequeña, no es dribble real
+  if (amp < T.dribMinAmp) return;
+
+  const prev = dribSM.hist[dribSM.hist.length-2];
+  const curr = dribSM.hist[dribSM.hist.length-1];
+  const now  = Date.now();
+
+  // Detectar cambio de dirección (de bajar a subir = bote)
+  const goingDown = curr > prev + 0.008;
+  const goingUp   = curr < prev - 0.008;
+
+  if (dribSM.phase !== 'down' && goingDown) {
+    dribSM.phase = 'down';
+  } else if (dribSM.phase === 'down' && goingUp) {
+    // Confirmar que pasó suficiente tiempo desde el último bote
+    if (now - dribSM.lastRepT > T.dribMinInterval) {
+      dribSM.lastRepT = now;
+      dribSM.reps++;
+      document.getElementById('shot-count').textContent = dribSM.reps;
+
+      // BPM
+      if (lastDribT > 0) {
+        const iv = now - lastDribT;
+        if (iv > 200 && iv < 2500) {
+          dribBpm = Math.round(60000 / iv);
+          document.getElementById('bpm-val').textContent = dribBpm;
+        }
+      }
+      lastDribT = now;
+
+      // Feedback de voz cada 3.5 s
+      if (now - lastVoiceT > 3500) {
+        lastVoiceT = now;
+        const msgs = ['Buen ritmo','Controla el balón','Más bajo el dribble','Cabeza arriba','Sigue así'];
+        speak(msgs[Math.floor(Math.random() * msgs.length)]);
+      }
+    }
+    dribSM.phase = 'up';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOTORES DE ANÁLISIS
+═══════════════════════════════════════════════════════ */
+function analyzeShoot(lm) {
+  const T = ENV_CONFIG[env];
+  const g=[], w=[], b=[]; let s=10;
+  const rS=LM(lm,12), lS=LM(lm,11), rE=LM(lm,14), rW=LM(lm,16);
+  const rH=LM(lm,24), lH=LM(lm,23), rK=LM(lm,26), lK=LM(lm,25);
+  const rA=LM(lm,28), lA=LM(lm,27);
+
+  const ea = ang(rS, rE, rW);
+  // Codo
+  if (ea < T.elbowMin)      { b.push('Codo cerrado'); s -= 2.5; }
+  else if (ea > T.elbowMax) { w.push('Relaja el brazo'); s -= 1; }
+  else                        g.push('Codo bien');
+
+  // Flare (codo hacia afuera)
+  const flare = Math.abs(rE.x - rS.x);
+  if (flare > T.flare) { b.push('Codo hacia afuera'); s -= 2; }
+
+  // Rodillas
+  const kk = (ang(rH,rK,rA) + ang(lH,lK,lA)) / 2;
+  if (kk > T.kneeMax) { b.push('Dobla las rodillas'); s -= 2.5; }
+  else                  g.push('Base buena');
+
+  // Hombros nivelados
+  if (Math.abs(lS.y - rS.y) > 0.07) { w.push('Hombros desnivelados'); s -= 1; }
+
+  // Release
+  if (rW.y < rS.y - 0.04) g.push('Release alto');
+  else                     w.push('Sube la muñeca');
+
+  // Bonus de entorno
+  s += T.scoreMod;
+  return { g, w, b, s: Math.max(0, Math.min(10, s)), ea, kk };
+}
+
+function analyzeDribble(lm) {
+  const T = ENV_CONFIG[env];
+  const g=[], w=[], b=[]; let s=10;
+  const rH=LM(lm,24),lH=LM(lm,23),rK=LM(lm,26),lK=LM(lm,25);
+  const rA=LM(lm,28),lA=LM(lm,27),rW=LM(lm,16),lW=LM(lm,15);
+
+  const kk = (ang(rH,rK,rA) + ang(lH,lK,lA)) / 2;
+  if (kk > T.dribKneeMax)           { b.push('Agáchate más'); s -= 3; }
+  else if (kk > T.dribKneeMax - 10) { w.push('Baja un poco más'); s -= 1; }
+  else                                 g.push('Posición baja');
+
+  const baseW = Math.abs(lH.x - rH.x);
+  if (baseW < T.dribBaseMin) { b.push('Base más ancha'); s -= 2; }
+  else                         g.push('Base');
+
+  const handH = Math.min(rW.y, lW.y);
+  if (handH > 0.46) g.push('Manos bajas'); else w.push('Baja las manos');
+
+  const backA = ang(LM(lm,11), LM(lm,23), LM(lm,25));
+  if (backA < 155) w.push('Espalda recta'); else g.push('Espalda');
+
+  s += T.scoreMod;
+  return { g, w, b, s: Math.max(0, Math.min(10, s)), kk };
+}
+
+function analyzeDefense(lm) {
+  const T = ENV_CONFIG[env];
+  const g=[], w=[], b=[]; let s=10;
+  const rH=LM(lm,24),lH=LM(lm,23),rK=LM(lm,26),lK=LM(lm,25);
+  const rA=LM(lm,28),lA=LM(lm,27),rW=LM(lm,16),lW=LM(lm,15);
+
+  const kk = (ang(rH,rK,rA) + ang(lH,lK,lA)) / 2;
+  if (kk > T.defKneeMax)           { b.push('Baja la posición'); s -= 3; }
+  else if (kk > T.defKneeMax - 12) { w.push('Más bajo aún'); s -= 1; }
+  else                                g.push('Posición defensiva');
+
+  const baseW = Math.abs(lA.x - rA.x);
+  if (baseW < T.defBaseMin) { b.push('Pies más separados'); s -= 2; }
+  else                        g.push('Base ancha');
+
+  const armsW = Math.abs(lW.x - rW.x);
+  if (armsW > 0.25) g.push('Brazos activos');
+  else              w.push('Extiende los brazos');
+
+  // Peso adelante (punta del pie vs talón — approx por posición del tobillo vs cadera)
+  const fwdBias = (rA.y + lA.y)/2 - (rH.y + lH.y)/2;
+  if (fwdBias > -0.25) g.push('Peso adelante');
+  else                 w.push('Inclínate al frente');
+
+  s += T.scoreMod;
+  return { g, w, b, s: Math.max(0, Math.min(10, s)), kk };
+}
+
+function analyzeFollowThrough(lm) {
+  const T = ENV_CONFIG[env];
+  const g=[], w=[], b=[]; let s=10;
+  const rS=LM(lm,12),rE=LM(lm,14),rW=LM(lm,16);
+  const rH=LM(lm,24),lH=LM(lm,23),rK=LM(lm,26),lK=LM(lm,25);
+  const rA=LM(lm,28),lA=LM(lm,27);
+
+  // Muñeca sobre codo
+  if (rW.y < rE.y - 0.02) g.push('Follow-through');
+  else                     { b.push('Termina el tiro'); s -= 3; }
+
+  // Extensión del brazo
+  const ae = ang(rS, rE, rW);
+  if (ae > T.ftExtMin) g.push('Brazo extendido');
+  else                 { w.push('Extiende el brazo'); s -= 1.5; }
+
+  // Muñeca sobre hombro (high release)
+  if (rW.y < rS.y - 0.03) g.push('Mano arriba');
+  else                     { b.push('Mano arriba tras tiro'); s -= 2; }
+
+  // Balance tras el tiro
+  const kk = (ang(rH,rK,rA) + ang(lH,lK,lA)) / 2;
+  if (kk < 176) g.push('Balance');
+  else          { w.push('Mantén balance'); s -= 1; }
+
+  s += T.scoreMod;
+  return { g, w, b, s: Math.max(0, Math.min(10, s)), kk, ae };
+}
+
+function runAnalysis(lm) {
+  switch (mode) {
+    case 'shoot'  : return analyzeShoot(lm);
+    case 'dribble': return analyzeDribble(lm);
+    case 'defense': return analyzeDefense(lm);
+    case 'ft'     : return analyzeFollowThrough(lm);
+    default       : return analyzeShoot(lm);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   FEEDBACK DE VOZ POR ERRORES
+═══════════════════════════════════════════════════════ */
+const ERR_VOICE = {
+  'Codo cerrado'         : 'Abre el codo debajo del balón',
+  'Codo hacia afuera'    : 'Codo adentro, apunta al aro',
+  'Dobla las rodillas'   : 'Usa más las piernas para saltar',
+  'Agáchate más'         : 'Bájate más, posición de trípode',
+  'Baja la posición'     : 'Baja más la posición defensiva',
+  'Pies más separados'   : 'Separa más los pies al ancho de hombros',
+  'Termina el tiro'      : 'Termina el follow-through, mano al aro',
+  'Mano arriba tras tiro': 'Mantén la mano arriba después del tiro',
+  'Base más ancha'       : 'Abre más la base para mayor equilibrio',
+  'Extiende los brazos'  : 'Levanta y extiende los brazos en defensa',
+  'Inclínate al frente'  : 'Pon el peso en la punta de los pies',
+};
+const PRAISE_MSGS = [
+  'Excelente tiro', 'Mecánica profesional', 'Muy buena forma',
+  'Perfecto, sigue así', 'Eso es nivel NBA', 'Técnica impecable',
+];
+
+// Cooldown de voz separado para análisis principal
+const VOICE_COOLDOWN = { shoot:4500, dribble:3500, defense:5000, ft:4500 };
+
+function voiceFB(r) {
+  const now = Date.now();
+  const cd = VOICE_COOLDOWN[mode] || 4500;
+  if (now - lastVoiceT < cd) return;
+  lastVoiceT = now;
+
+  if (r.b.length) {
+    speak(ERR_VOICE[r.b[0]] || r.b[0]);
+  } else if (r.s >= 9) {
+    speak(PRAISE_MSGS[Math.floor(Math.random() * PRAISE_MSGS.length)]);
+  } else if (r.w.length && r.s >= 6.5) {
+    speak(r.w[0]);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   DIBUJO DEL ESQUELETO
+═══════════════════════════════════════════════════════ */
+const BONE_PAIRS = [
+  [11,12],[11,13],[13,15],[12,14],[14,16],
+  [11,23],[12,24],[23,24],
+  [23,25],[25,27],[24,26],[26,28],
+];
+const RARM_SET = new Set([12,14,16]);
+const LEG_SET  = new Set([25,26,27,28]);
+
+function drawSkel(lm, result, canvas) {
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const W = canvas.width, H = canvas.height;
+
+  const scoreCol = result.s >= 8 ? '#00E676' : result.s >= 5 ? '#FF8800' : '#FF1744';
+  const armOK = result.ea != null ? (result.ea >= ENV_CONFIG[env].elbowMin && result.ea <= ENV_CONFIG[env].elbowMax) : true;
+  const legOK = result.kk != null ? result.kk < ENV_CONFIG[env].kneeMax : true;
+
+  // Bones
+  ctx.lineWidth = 5; ctx.lineCap = 'round';
+  BONE_PAIRS.forEach(([a, b]) => {
+    const pa = lm[a], pb = lm[b];
+    if (!pa || !pb || pa.visibility < 0.35 || pb.visibility < 0.35) return;
+    let col = scoreCol;
+    if (RARM_SET.has(a) || RARM_SET.has(b)) col = armOK ? '#00E676' : '#FF1744';
+    if (LEG_SET.has(a)  || LEG_SET.has(b))  col = legOK ? '#00E676' : '#FF1744';
+    ctx.beginPath();
+    ctx.moveTo(pa.x*W, pa.y*H);
+    ctx.lineTo(pb.x*W, pb.y*H);
+    ctx.strokeStyle = col;
+    ctx.shadowColor = col; ctx.shadowBlur = 14;
+    ctx.stroke(); ctx.shadowBlur = 0;
+  });
+
+  // Joints
+  lm.forEach((p, i) => {
+    if (!p || p.visibility < 0.35) return;
+    let dc = '#60a5fa';
+    if (RARM_SET.has(i)) dc = armOK ? '#00E676' : '#FF1744';
+    else if (i===11||i===13||i===15) dc = scoreCol;
+    else if (LEG_SET.has(i)) dc = legOK ? '#00E676' : '#FF1744';
+    ctx.beginPath(); ctx.arc(p.x*W, p.y*H, 7, 0, Math.PI*2);
+    ctx.fillStyle = dc; ctx.shadowColor = dc; ctx.shadowBlur = 18; ctx.fill(); ctx.shadowBlur = 0;
+    ctx.strokeStyle = 'rgba(255,255,255,.6)'; ctx.lineWidth = 1.5; ctx.stroke();
+  });
+
+  // Etiquetas de ángulo
+  const drawLabel = (txt, p, col) => {
+    if (!p || p.visibility < 0.38) return;
+    const x = p.x*W, y = p.y*H;
+    ctx.save();
+    ctx.font = 'bold 13px Rajdhani, sans-serif';
+    const tw = ctx.measureText(txt).width + 14;
+    ctx.fillStyle = 'rgba(0,0,0,.78)';
+    ctx.beginPath(); ctx.roundRect(x-tw/2, y-24, tw, 20, 4); ctx.fill();
+    ctx.fillStyle = col; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(txt, x, y-14); ctx.restore();
+  };
+  if (result.ea != null) drawLabel(Math.round(result.ea)+'°', lm[14], armOK ? '#00E676' : '#FF1744');
+  if (result.kk != null) drawLabel(Math.round(result.kk)+'°', lm[26], legOK ? '#00E676' : '#FF1744');
+}
+
+/* ═══════════════════════════════════════════════════════
+   ACTUALIZAR HUD
+═══════════════════════════════════════════════════════ */
+function setHUD(r, scoreId, statusId, tagsId) {
+  const sn = document.getElementById(scoreId);
+  sn.textContent = r.s.toFixed(1);
+  sn.style.color = r.s >= 8 ? '#00E676' : r.s >= 5 ? '#FF8800' : '#FF1744';
+  const st = document.getElementById(statusId);
+  if (!r.b.length && !r.w.length) {
+    st.textContent = '🔥 FORMA PERFECTA'; st.style.color = '#00E676';
+  } else if (r.b.length) {
+    st.textContent = '⚠ ' + r.b[0].toUpperCase(); st.style.color = '#FF1744';
+  } else {
+    st.textContent = '▲ ' + r.w[0].toUpperCase(); st.style.color = '#FF8800';
+  }
+  document.getElementById(tagsId).innerHTML = [
+    ...r.b.map(t => `<span class="tag er">✗ ${t}</span>`),
+    ...r.w.map(t => `<span class="tag wn">▲ ${t}</span>`),
+    ...r.g.map(t => `<span class="tag ok">✓ ${t}</span>`),
+  ].join('');
+}
+
+/* ═══════════════════════════════════════════════════════
+   CÁMARA PRINCIPAL
+═══════════════════════════════════════════════════════ */
+async function startCam() {
+  if (analyzing) return;
+  analyzing = true;
+  const MNAMES = { shoot:'TIRO', dribble:'DRIBBLE', defense:'DEFENSA', ft:'FOLLOW-THROUGH' };
+  const C = ENV_CONFIG[env];
+
+  document.getElementById('a-idle').style.display    = 'none';
+  document.getElementById('cam-wrap').style.display   = 'block';
+  document.getElementById('cam-ctrls').style.display  = 'flex';
+  document.getElementById('loader').style.display     = 'flex';
+  document.getElementById('errbox').style.display     = 'none';
+  document.getElementById('mode-badge').textContent   = MNAMES[mode];
+  document.getElementById('bpm-box').style.display    = mode === 'dribble' ? 'block' : 'none';
+  document.getElementById('shot-lbl').textContent     = mode === 'dribble' ? 'BOTES' : 'TIROS';
+  document.getElementById('conf-bar-wrap').style.display = 'block';
+
+  // Env HUD
+  const eh = document.getElementById('env-hud');
+  eh.style.display = 'block';
+  eh.textContent   = C.label;
+  eh.style.color   = C.color;
+  eh.style.border  = `1px solid ${C.color}55`;
+
+  // Reset estado
+  sessShots = 0; sessScores = []; sessActive = true;
+  document.getElementById('shot-count').textContent = '0';
+  smoothed = null; frameN = 0;
+  shotSM.phase = 'idle'; shotSM.cooldown = false;
+  dribSM.phase = 'neutral'; dribSM.reps = 0; dribSM.hist = []; dribSM.lastRepT = 0;
+  lastDribT = 0; lastVoiceT = 0; lastShotT = 0;
+
+  try {
+    mainPose = new Pose({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}` });
+    mainPose.setOptions({
+      modelComplexity: 1, smoothLandmarks: true,
+      enableSegmentation: false,
+      minDetectionConfidence: 0.65,
+      minTrackingConfidence: 0.65,
+    });
+    mainPose.onResults(onMainResult);
+
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'user', width:{ideal:640}, height:{ideal:480} }
+    });
+    const vid = document.getElementById('vid');
+    vid.srcObject = stream; await vid.play();
+
+    mainCam = new Camera(vid, {
+      onFrame: async () => {
+        frameN++;
+        // Procesar 1 de cada 2 frames para mejor rendimiento en móvil
+        if (frameN % 2 !== 0) return;
+        await mainPose.send({ image: vid });
+      },
+      width: 640, height: 480
+    });
+    mainCam.start();
+  } catch (err) {
+    analyzing = false;
+    document.getElementById('loader').style.display    = 'none';
+    const eb = document.getElementById('errbox');
+    eb.style.display = 'block';
+    eb.textContent   = '⚠️ No se pudo acceder a la cámara. Abre en Safari / Chrome y permite el acceso.';
+    document.getElementById('a-idle').style.display   = 'flex';
+    document.getElementById('cam-wrap').style.display = 'none';
+    document.getElementById('cam-ctrls').style.display = 'none';
+  }
+}
+
+function onMainResult(res) {
+  // Ocultar loader al primer frame
+  const lo = document.getElementById('loader');
+  if (lo.style.display !== 'none') {
+    lo.style.display = 'none';
+    speak('Análisis iniciado. ¡A entrenar!');
+  }
+
+  const vid = document.getElementById('vid');
+  const cvs = document.getElementById('cvs');
+  cvs.width  = vid.videoWidth  || 640;
+  cvs.height = vid.videoHeight || 480;
+
+  if (!res.poseLandmarks) {
+    document.getElementById('status-txt').textContent = '👀 MUÉVETE AL CENTRO';
+    document.getElementById('tags').innerHTML = '';
+    document.getElementById('score-num').textContent = '--';
+    document.getElementById('conf-fill').style.width = '0%';
+    return;
+  }
+
+  const conf = avgVisibility(res.poseLandmarks) * 100;
+  document.getElementById('conf-fill').style.width = conf.toFixed(0) + '%';
+
+  if (!visible(res.poseLandmarks)) {
+    document.getElementById('status-txt').textContent = '👀 MUÉVETE AL CENTRO';
+    document.getElementById('tags').innerHTML = '';
+    document.getElementById('score-num').textContent = '--';
+    return;
+  }
+
+  const lm = smooth(res.poseLandmarks);
+  const r  = runAnalysis(lm);
+  drawSkel(lm, r, cvs);
+  setHUD(r, 'score-num', 'status-txt', 'tags');
+  voiceFB(r);
+  detectDribble(lm);
+  sessScores.push(r.s);
+
+  if (detectShot(lm)) {
+    sessShots++;
+    document.getElementById('shot-count').textContent = sessShots;
+    const fl   = document.getElementById('sflash');
+    document.getElementById('stxt').textContent = mode === 'ft' ? '🌊 FOLLOW!' : '🏀 ¡TIRO!';
+    fl.classList.add('on');
+    setTimeout(() => fl.classList.remove('on'), 650);
+    speak('Tiro detectado');
+  }
+}
+
+function stopCam() {
+  analyzing = false;
+  if (mainCam)  { mainCam.stop(); mainCam = null; }
+  if (mainPose) { mainPose.close(); mainPose = null; }
+  const vid = document.getElementById('vid');
+  if (vid.srcObject) { vid.srcObject.getTracks().forEach(t => t.stop()); vid.srcObject = null; }
+  document.getElementById('a-idle').style.display             = 'flex';
+  document.getElementById('cam-wrap').style.display           = 'none';
+  document.getElementById('cam-ctrls').style.display          = 'none';
+  document.getElementById('conf-bar-wrap').style.display      = 'none';
+  document.getElementById('env-hud').style.display            = 'none';
+  sessActive = false;
+  window.speechSynthesis && speechSynthesis.cancel();
+  document.getElementById('vbadge').classList.remove('on');
+}
+
+function saveSession() {
+  if (!sessScores.length) { stopCam(); return; }
+  const avg  = sessScores.reduce((a,b) => a+b, 0) / sessScores.length;
+  const MNAMES = { shoot:'Tiro', dribble:'Dribble', defense:'Defensa', ft:'Follow-through' };
+  sessions.unshift({
+    id: Date.now(), mode, modeName: MNAMES[mode],
+    shots: sessShots, avgScore: +avg.toFixed(1),
+    maxScore: +Math.max(...sessScores).toFixed(1),
+    env,
+    date: new Date().toLocaleDateString('es', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' }),
+    reps: sessScores.length,
+  });
+  if (sessions.length > 60) sessions.pop();
+  try { localStorage.setItem('hf4', JSON.stringify(sessions)); } catch(e) {}
+  speak('Sesión guardada. Promedio ' + avg.toFixed(1));
+  stopCam();
+  updateHomeStats();
+}
+
+/* ═══════════════════════════════════════════════════════
+   CÁMARA DE DRILL
+═══════════════════════════════════════════════════════ */
+async function startDrillCam(dMode) {
+  const dw = document.getElementById('dcam');
+  dw.style.display = 'block';
+  try {
+    drillPose = new Pose({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}` });
+    drillPose.setOptions({ modelComplexity:1, smoothLandmarks:true, enableSegmentation:false, minDetectionConfidence:.58, minTrackingConfidence:.58 });
+    drillPose.onResults(res => onDrillResult(res, dMode));
+    const vid = document.getElementById('dvid');
+    const stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:'user', width:{ideal:480}, height:{ideal:360} } });
+    vid.srcObject = stream; await vid.play();
+    drillCam = new Camera(vid, {
+      onFrame: async () => { await drillPose.send({ image:vid }); },
+      width:480, height:360,
+    });
+    drillCam.start();
+  } catch(e) { document.getElementById('dcam').style.display = 'none'; }
+}
+
+function onDrillResult(res, dMode) {
+  const vid = document.getElementById('dvid'), cvs = document.getElementById('dcvs');
+  cvs.width = vid.videoWidth||480; cvs.height = vid.videoHeight||360;
+  if (!res.poseLandmarks || !visible(res.poseLandmarks)) return;
+  const lm = smooth(res.poseLandmarks);
+  const prev = mode; mode = dMode;
+  const r = runAnalysis(lm);
+  mode = prev;
+  drawSkel(lm, r, cvs);
+  const st = document.getElementById('dcam-stat');
+  if (!r.b.length && !r.w.length)   { st.textContent = '🔥 FORMA PERFECTA'; st.style.color='#00E676'; }
+  else if (r.b.length)               { st.textContent = '⚠ ' + r.b[0].toUpperCase(); st.style.color='#FF1744'; }
+  else                               { st.textContent = '▲ ' + r.w[0].toUpperCase(); st.style.color='#FF8800'; }
+  document.getElementById('dtags').innerHTML = [
+    ...r.b.map(t=>`<span class="tag er">✗ ${t}</span>`),
+    ...r.w.map(t=>`<span class="tag wn">▲ ${t}</span>`),
+    ...r.g.map(t=>`<span class="tag ok">✓ ${t}</span>`),
+  ].join('');
+  const now = Date.now();
+  if (now - lastVoiceT > 4200) {
+    lastVoiceT = now;
+    if (r.b.length) speak(ERR_VOICE[r.b[0]] || r.b[0]);
+    else if (r.s >= 9) speak(PRAISE_MSGS[Math.floor(Math.random()*PRAISE_MSGS.length)]);
+  }
+}
+
+function stopDrillCam() {
+  if (drillCam)  { drillCam.stop(); drillCam = null; }
+  if (drillPose) { drillPose.close(); drillPose = null; }
+  const vid = document.getElementById('dvid');
+  if (vid.srcObject) { vid.srcObject.getTracks().forEach(t => t.stop()); vid.srcObject = null; }
+  document.getElementById('dcam').style.display = 'none';
+}
+
+/* ═══════════════════════════════════════════════════════
+   LÓGICA DE DRILL
+═══════════════════════════════════════════════════════ */
+function startDrill(key) {
+  const d = DRILLS[key]; if (!d) return;
+  activeDrill = { key, ...d }; drillReps = 0;
+  const el = id => document.getElementById(id);
+  el('adrill').style.display     = 'block';
+  el('drill-name-txt').textContent = d.icon + ' ' + d.name;
+  el('drill-prog').textContent    = '0 / ' + d.reps;
+  el('rep-num').textContent       = '0';
+  el('drill-instr').textContent   = d.instr;
+  el('drill-bar').style.width     = '0%';
+  el('ddone-btn').style.display   = d.timer ? 'none' : 'block';
+  startDrillCam(d.mode);
+  if (d.timer) {
+    let rem = d.reps;
+    el('rep-num').textContent  = rem;
+    el('drill-prog').textContent = rem + 's';
+    speak(d.name + '. ' + d.instr);
+    drillTick = setInterval(() => {
+      rem--;
+      el('rep-num').textContent  = rem;
+      el('drill-prog').textContent = rem + 's';
+      el('drill-bar').style.width = ((d.reps-rem)/d.reps*100) + '%';
+      if (rem <= 0)   { clearInterval(drillTick); drillTick = null; speak('¡Ejercicio completado!'); stopDrill(); }
+      else if (rem===10) speak('Diez segundos restantes');
+    }, 1000);
+  } else {
+    speak(d.name + '. ' + d.instr);
+  }
+  el('adrill').scrollIntoView({ behavior:'smooth' });
+}
+
+function repDone() {
+  if (!activeDrill || activeDrill.timer) return;
+  drillReps++;
+  const t = activeDrill.reps;
+  document.getElementById('rep-num').textContent  = drillReps;
+  document.getElementById('drill-prog').textContent = drillReps + ' / ' + t;
+  document.getElementById('drill-bar').style.width  = (drillReps/t*100) + '%';
+  if (drillReps >= t)          { speak('¡Serie completada! ¡Excelente!'); setTimeout(stopDrill, 1400); }
+  else if (drillReps % 5 === 0) speak(drillReps + ' de ' + t + '. ¡Sigue así!');
+}
+
+function stopDrill() {
+  if (drillTick) { clearInterval(drillTick); drillTick = null; }
+  stopDrillCam();
+  activeDrill = null; drillReps = 0;
+  document.getElementById('adrill').style.display = 'none';
+}
+
+/* ═══════════════════════════════════════════════════════
+   NAVEGACIÓN
+═══════════════════════════════════════════════════════ */
+const SCREENS = ['home','analyze','train','stats'];
+
+function goTo(name) {
+  SCREENS.forEach(s => {
+    document.getElementById(s+'-scr').classList.toggle('on', s===name);
+    document.getElementById('nb-'+s).classList.toggle('on', s===name);
+  });
+  if (name === 'stats') renderStats();
+  if (name === 'home')  updateHomeStats();
+}
+
+function pickMode(m, el) {
+  mode = m;
+  document.querySelectorAll('.mc').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function pillMode(el, m) {
+  mode = m;
+  document.querySelectorAll('#a-idle .pill').forEach(p => {
+    if (['shoot','dribble','defense','ft'].some(mm => p.onclick && p.onclick.toString().includes(mm))) p.classList.remove('on');
+  });
+  el.classList.add('on');
+  const N = { shoot:'TIRO', dribble:'DRIBBLE', defense:'DEFENSA', ft:'FOLLOW-THROUGH' };
+  document.getElementById('idle-mode').textContent = N[m];
+}
+
+function pickEnv(e, card) {
+  env = e;
+  document.querySelectorAll('.env-card').forEach(c => { c.classList.remove('sel','sel-blue'); });
+  card.classList.add(e==='cancha' ? 'sel-blue' : 'sel');
+  updateEnvInfoBox();
+}
+
+function pillEnv(el, e) {
+  env = e;
+  ['apill-casa','apill-cancha'].forEach(id => document.getElementById(id).classList.remove('on'));
+  el.classList.add('on');
+  updateEnvInfoBox();
+}
+
+function updateEnvInfoBox() {
+  const C = ENV_CONFIG[env];
+  document.getElementById('eib-title').textContent = C.label;
+  document.getElementById('eib-feats').innerHTML = C.feats
+    .map(f => `<div class="eib-feat"><div class="dot"></div>${f}</div>`).join('');
+}
+
+/* ═══════════════════════════════════════════════════════
+   ESTADÍSTICAS
+═══════════════════════════════════════════════════════ */
+function updateHomeStats() {
+  document.getElementById('h-sess').textContent  = sessions.length;
+  document.getElementById('h-shots').textContent = sessions.reduce((a,s) => a+(s.shots||0), 0);
+  if (sessions.length) {
+    const avg = sessions.reduce((a,s) => a+s.avgScore, 0) / sessions.length;
+    document.getElementById('h-avg').textContent = avg.toFixed(1);
+  }
+}
+
+function renderStats() {
+  const total = sessions.reduce((a,s) => a+(s.shots||0), 0);
+  document.getElementById('st-sess').textContent  = sessions.length;
+  document.getElementById('st-shots').textContent = total;
+  if (sessions.length) {
+    const avg  = sessions.reduce((a,s) => a+s.avgScore, 0) / sessions.length;
+    const best = Math.max(...sessions.map(s => s.avgScore));
+    document.getElementById('st-avg').textContent  = avg.toFixed(1);
+    document.getElementById('st-best').textContent = best.toFixed(1);
+  }
+  // Barras
+  const last7 = sessions.slice(0,7).reverse();
+  const chart = document.getElementById('bar-chart');
+  if (last7.length) {
+    chart.innerHTML = last7.map(s => {
+      const h   = (s.avgScore/10)*78;
+      const col = s.avgScore>=8 ? '#00E676' : s.avgScore>=6 ? '#FF8800' : '#FF1744';
+      const envIcon = s.env === 'cancha' ? '🏟️' : '🏠';
+      return `<div class="bcol">
+        <div class="bar" style="height:${h}px;background:${col};box-shadow:0 0 10px ${col}55"></div>
+        <div class="blbl">${s.avgScore}</div>
+        <div class="blbl">${envIcon}</div>
+      </div>`;
+    }).join('');
+  } else {
+    chart.innerHTML = '<div style="color:var(--txt3);font-size:13px;font-weight:700;padding:20px 0;width:100%;text-align:center">Sin sesiones aún</div>';
+  }
+  // Lista
+  const ICONS = { shoot:'🎯', dribble:'⚡', defense:'🛡️', ft:'🌊' };
+  const list = document.getElementById('sess-list');
+  if (sessions.length) {
+    list.innerHTML = sessions.slice(0,15).map(s => `
+      <div class="si">
+        <span class="si-ico">${ICONS[s.mode]||'🏀'}</span>
+        <div class="si-info">
+          <div class="si-t">${s.modeName} · ${s.shots} tiros</div>
+          <div class="si-m">${s.date} · ${s.env==='cancha'?'🏟️':'🏠'} · ${s.reps} análisis</div>
+        </div>
+        <div class="si-s">${s.avgScore}</div>
+      </div>`).join('');
+  } else {
+    list.innerHTML = '<div style="color:var(--txt3);font-size:13px;font-weight:700;padding:20px 0;text-align:center">No hay sesiones guardadas</div>';
+  }
+}
+
+function clearStats() {
+  if (!confirm('¿Borrar todo el historial?')) return;
+  sessions = [];
+  try { localStorage.removeItem('hf4'); } catch(e) {}
+  renderStats(); updateHomeStats();
+}
+
+/* ═══════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════ */
+// Precarga las voces (necesario en iOS/Safari)
+if (window.speechSynthesis) {
+  speechSynthesis.getVoices();
+  speechSynthesis.addEventListener('voiceschanged', () => speechSynthesis.getVoices());
+}
+
+// Inicializar info box
+updateEnvInfoBox();
+updateHomeStats();
+</script>
+</body>
+</html>
