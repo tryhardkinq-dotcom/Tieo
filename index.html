@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>HOOPFORM PRO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════ TOKENS ═══════════════ */
+:root{
+  --bg:#0a0a0a;
+  --surface:#141414;
+  --surface2:#1c1c1c;
+  --border:#282828;
+  --orange:#FF5500;
+  --oglow:rgba(255,85,0,.22);
+  --gold:#FFB800;
+  --green:#00E676;
+  --red:#FF1744;
+  --blue:#00B0FF;
+  --txt:#FFFFFF;
+  --txt2:#999999;
+  --txt3:#444444;
+}
+
+/* ═══════════════ RESET ═══════════════ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:var(–bg);color:var(–txt);font-family:‘Rajdhani’,sans-serif;height:100%;overflow:hidden}
+
+/* ═══════════════ SCREENS ═══════════════ */
+.scr{display:none;height:100vh;overflow-y:auto;padding-bottom:64px;flex-direction:column}
+.scr.on{display:flex}
+
+/* ═══════════════ NAV ═══════════════ */
+#nav{
+position:fixed;bottom:0;left:0;right:0;height:58px;
+background:#111;border-top:1px solid var(–border);
+display:flex;z-index:900;
+padding-bottom:env(safe-area-inset-bottom,0px)
+}
+.nb{
+flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+background:none;border:none;color:var(–txt3);cursor:pointer;
+font-family:‘Rajdhani’,sans-serif;font-size:10px;font-weight:700;
+letter-spacing:1px;text-transform:uppercase;transition:color .2s
+}
+.nb.on{color:var(–orange)}
+.nb svg{width:20px;height:20px}
+
+/* ═══════════════ HOME ═══════════════ */
+.h-hero{
+padding:40px 20px 20px;
+background:linear-gradient(180deg,#1a0800 0%,var(–bg) 100%)
+}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.brand-ball{
+width:42px;height:42px;border-radius:50%;background:var(–orange);
+display:flex;align-items:center;justify-content:center;font-size:20px;
+box-shadow:0 0 20px var(–oglow)
+}
+.brand-txt{display:flex;flex-direction:column;gap:2px}
+.brand-name{font-family:‘Bebas Neue’,cursive;font-size:28px;letter-spacing:3px;line-height:1}
+.brand-sub{font-size:10px;color:var(–txt3);font-weight:700;letter-spacing:2px}
+.badge-pro{
+display:inline-block;font-size:10px;font-weight:700;
+color:var(–orange);background:var(–oglow);
+border:1px solid var(–orange);border-radius:4px;
+padding:2px 7px;letter-spacing:2px;margin-left:6px;vertical-align:middle
+}
+.live-pill{
+display:inline-flex;align-items:center;gap:6px;
+background:rgba(255,0,0,.08);border:1px solid rgba(255,0,0,.25);
+border-radius:4px;padding:4px 10px;
+font-size:11px;font-weight:700;color:#FF4444;letter-spacing:2px;
+margin-bottom:14px
+}
+.ldot{width:6px;height:6px;border-radius:50%;background:#FF4444;animation:blink 1s infinite}
+.h-title{font-family:‘Bebas Neue’,cursive;font-size:38px;letter-spacing:2px;line-height:1;margin-bottom:6px}
+.h-title em{font-style:normal;color:var(–orange)}
+.h-sub{color:var(–txt2);font-size:13px;font-weight:600;letter-spacing:.5px}
+
+/* stats row */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 20px 18px}
+.sc{
+background:var(–surface);border:1px solid var(–border);border-radius:12px;
+padding:12px 10px;text-align:center;position:relative;overflow:hidden
+}
+.sc::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;background:var(–orange)}
+.sc-n{font-family:‘Bebas Neue’,cursive;font-size:32px;color:var(–orange);line-height:1}
+.sc-l{font-size:10px;color:var(–txt3);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+
+/* section title */
+.sec{padding:0 20px 10px;font-family:‘Bebas Neue’,cursive;font-size:19px;letter-spacing:2px;color:var(–txt2)}
+.sec em{font-style:normal;color:var(–orange)}
+
+/* mode grid */
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px 16px}
+.mc{
+background:var(–surface);border:2px solid var(–border);
+border-radius:14px;padding:14px 12px;cursor:pointer;
+position:relative;overflow:hidden;
+transition:border-color .15s,transform .1s
+}
+.mc:active{transform:scale(.97)}
+.mc.sel{border-color:var(–orange);background:linear-gradient(135deg,rgba(255,85,0,.08),var(–surface))}
+.mc-badge{
+position:absolute;top:8px;right:8px;
+font-size:9px;font-weight:700;padding:2px 6px;
+border-radius:3px;letter-spacing:1px;text-transform:uppercase
+}
+.mc-badge.pop{background:var(–orange);color:#fff}
+.mc-badge.nw{background:var(–gold);color:#000}
+.mc-ico{font-size:24px;margin-bottom:8px}
+.mc-name{font-family:‘Bebas Neue’,cursive;font-size:17px;letter-spacing:1px;color:var(–txt)}
+.mc-desc{font-size:11px;color:var(–txt3);margin-top:3px;font-weight:600}
+
+/* CTA */
+.cta{
+margin:0 20px 24px;border:none;border-radius:14px;padding:16px;
+background:var(–orange);font-family:‘Bebas Neue’,cursive;
+font-size:21px;letter-spacing:3px;color:#fff;cursor:pointer;
+width:calc(100% - 40px);box-shadow:0 6px 28px var(–oglow);
+display:flex;align-items:center;justify-content:center;gap:8px;
+transition:transform .1s
+}
+.cta:active{transform:scale(.98)}
+
+/* ═══════════════ ANALYZE ═══════════════ */
+.a-idle{
+padding:32px 20px;display:flex;flex-direction:column;
+align-items:center;text-align:center;flex:1
+}
+.idle-ball{
+width:86px;height:86px;border-radius:50%;
+background:radial-gradient(circle,rgba(255,85,0,.12),rgba(255,85,0,.02));
+border:2px dashed rgba(255,85,0,.4);
+display:flex;align-items:center;justify-content:center;
+font-size:36px;margin:0 auto 18px
+}
+.idle-title{font-family:‘Bebas Neue’,cursive;font-size:26px;letter-spacing:2px;margin-bottom:6px}
+.idle-title em{font-style:normal;color:var(–orange)}
+.idle-sub{color:var(–txt2);font-size:13px;font-weight:600;margin-bottom:20px;line-height:1.6}
+
+.pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:20px}
+.pill{
+background:var(–surface2);border:1px solid var(–border);
+border-radius:99px;padding:7px 14px;
+font-size:12px;font-weight:700;cursor:pointer;
+transition:all .15s;letter-spacing:.5px;color:var(–txt2)
+}
+.pill.on{background:var(–orange);border-color:var(–orange);color:#fff}
+
+.big-btn{
+border:none;border-radius:14px;padding:15px;
+background:var(–orange);font-family:‘Bebas Neue’,cursive;
+font-size:21px;letter-spacing:3px;color:#fff;cursor:pointer;
+width:100%;box-shadow:0 6px 28px var(–oglow);transition:transform .1s
+}
+.big-btn:active{transform:scale(.98)}
+
+/* camera */
+#cam-wrap{position:relative;width:100%;flex:1;background:#000;display:none;overflow:hidden;min-height:0}
+#vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+#cvs{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(-1)}
+
+/* HUD */
+.hud-top{
+position:absolute;top:0;left:0;right:0;padding:12px 14px;
+display:flex;justify-content:space-between;align-items:flex-start;
+background:linear-gradient(to bottom,rgba(0,0,0,.8),transparent);
+pointer-events:none
+}
+.hbox{
+background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+border:1px solid rgba(255,255,255,.1);border-radius:10px;
+padding:8px 12px;text-align:center
+}
+.hnum{font-family:‘Bebas Neue’,cursive;font-size:36px;line-height:1;transition:color .3s}
+.hlbl{font-size:9px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase}
+.hmode{
+background:rgba(255,85,0,.15);border:1px solid rgba(255,85,0,.3);
+border-radius:6px;padding:6px 12px;
+font-size:11px;font-weight:700;color:var(–orange);
+letter-spacing:2px;text-transform:uppercase
+}
+
+.hud-bot{
+position:absolute;bottom:0;left:0;right:0;
+padding:24px 14px 12px;
+background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
+pointer-events:none
+}
+.hstatus{
+font-family:‘Bebas Neue’,cursive;font-size:16px;
+letter-spacing:1.5px;margin-bottom:7px;min-height:22px
+}
+.tagrow{display:flex;gap:5px;flex-wrap:wrap}
+
+/* tags */
+.tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:.5px}
+.ok{background:rgba(0,230,118,.12);color:var(–green);border:1px solid rgba(0,230,118,.3)}
+.er{background:rgba(255,23,68,.12);color:var(–red);border:1px solid rgba(255,23,68,.3)}
+.wn{background:rgba(255,85,0,.12);color:#FF8800;border:1px solid rgba(255,85,0,.3)}
+
+/* shot flash */
+#sflash{
+position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+pointer-events:none;opacity:0;transition:opacity .08s;
+border:3px solid var(–gold)
+}
+#sflash.on{opacity:1}
+.stxt{
+font-family:‘Bebas Neue’,cursive;font-size:50px;color:var(–gold);
+letter-spacing:4px;text-shadow:0 0 40px var(–gold);
+animation:pop .4s ease-out
+}
+
+/* loading */
+#loader{
+position:absolute;inset:0;background:rgba(0,0,0,.85);
+display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:20
+}
+.ring{
+width:50px;height:50px;
+border:3px solid rgba(255,85,0,.2);border-top-color:var(–orange);
+border-radius:50%;animation:spin .7s linear infinite
+}
+.ltxt{color:var(–txt2);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+
+/* bpm badge */
+.bpm-box{
+position:absolute;top:58px;left:12px;
+background:rgba(0,0,0,.7);border:1px solid rgba(0,176,255,.25);
+border-radius:10px;padding:8px 12px;display:none
+}
+.bpm-n{font-family:‘Bebas Neue’,cursive;font-size:28px;color:var(–blue)}
+.bpm-l{font-size:9px;color:rgba(255,255,255,.4);letter-spacing:1px}
+
+/* cam controls */
+.cam-ctrls{display:flex;gap:10px;padding:10px 16px 0;background:var(–bg)}
+.ctrl{
+flex:1;background:var(–surface2);border:1px solid var(–border);
+border-radius:12px;padding:12px;color:var(–txt2);cursor:pointer;
+font-family:‘Rajdhani’,sans-serif;font-size:13px;font-weight:700;
+letter-spacing:1px;text-transform:uppercase;transition:all .15s
+}
+.ctrl.danger{color:var(–red);border-color:rgba(255,23,68,.2)}
+.ctrl.prim{background:var(–orange);border-color:var(–orange);color:#fff}
+
+/* error */
+.errbox{
+background:rgba(255,23,68,.08);border:1px solid rgba(255,23,68,.3);
+border-radius:10px;padding:12px 16px;margin:16px 20px;
+font-size:13px;color:var(–red);font-weight:600;display:none
+}
+
+/* ═══════════════ TRAIN ═══════════════ */
+.t-head{padding:28px 20px 16px}
+.t-title{font-family:‘Bebas Neue’,cursive;font-size:34px;letter-spacing:2px}
+.t-title em{font-style:normal;color:var(–orange)}
+.t-sub{color:var(–txt2);font-size:13px;font-weight:600;letter-spacing:.5px;margin-top:2px}
+.t-body{padding:0 20px 28px}
+
+/* active drill */
+#adrill{
+background:var(–surface);border:1px solid var(–orange);
+border-radius:16px;padding:16px;margin-bottom:16px;display:none
+}
+.dcam{
+position:relative;width:100%;aspect-ratio:4/3;background:#000;
+border-radius:10px;overflow:hidden;margin-bottom:12px;display:none
+}
+.dcam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.dcam canvas{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(-1)}
+.dcam-bot{
+position:absolute;bottom:0;left:0;right:0;
+padding:10px 12px;background:linear-gradient(to top,rgba(0,0,0,.9),transparent)
+}
+.dcam-stat{font-family:‘Bebas Neue’,cursive;font-size:14px;letter-spacing:1px;margin-bottom:5px}
+
+.rep-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.rep-big{font-family:‘Bebas Neue’,cursive;font-size:58px;color:var(–orange);line-height:1}
+.rep-rt{text-align:right}
+.rep-name{font-family:‘Bebas Neue’,cursive;font-size:17px;letter-spacing:1px}
+.rep-tot{font-size:11px;color:var(–txt3);font-weight:700}
+
+.prog-bg{background:var(–border);border-radius:99px;height:5px;margin-bottom:12px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(–orange),var(–gold));border-radius:99px;transition:width .3s}
+
+.dinstr{
+background:rgba(255,85,0,.07);border:1px solid rgba(255,85,0,.18);
+border-radius:8px;padding:10px 12px;
+font-size:13px;font-weight:600;line-height:1.5;margin-bottom:12px
+}
+
+.dbtns{display:flex;gap:8px}
+.ddone{
+flex:2;background:var(–orange);border:none;border-radius:10px;
+padding:13px;font-family:‘Rajdhani’,sans-serif;font-size:14px;
+font-weight:700;letter-spacing:1px;color:#fff;cursor:pointer;text-transform:uppercase
+}
+.dstop{
+flex:1;background:var(–surface2);border:1px solid var(–border);
+border-radius:10px;padding:13px;font-family:‘Rajdhani’,sans-serif;
+font-size:14px;font-weight:700;color:var(–txt3);cursor:pointer
+}
+
+.cat-lbl{
+font-size:11px;font-weight:700;color:var(–txt3);
+letter-spacing:2px;text-transform:uppercase;
+margin:14px 0 8px;display:flex;align-items:center;gap:6px
+}
+.dc{
+background:var(–surface);border:1px solid var(–border);
+border-radius:12px;padding:14px;margin-bottom:8px;
+display:flex;align-items:center;gap:12px;cursor:pointer;
+transition:border-color .15s,transform .1s
+}
+.dc:active{transform:scale(.98);border-color:var(–orange)}
+.di{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.di.s{background:rgba(255,85,0,.1)}
+.di.d{background:rgba(0,176,255,.1)}
+.di.df{background:rgba(0,230,118,.1)}
+.di-info{flex:1}
+.di-name{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(–txt)}
+.di-meta{font-size:11px;color:var(–txt3);margin-top:2px;font-weight:600}
+.diff{font-size:9px;font-weight:700;padding:3px 8px;border-radius:3px;letter-spacing:1px;text-transform:uppercase;flex-shrink:0}
+.easy{background:rgba(0,230,118,.12);color:var(–green)}
+.med{background:rgba(255,136,0,.12);color:#FF8800}
+.hard{background:rgba(255,23,68,.12);color:var(–red)}
+
+/* ═══════════════ STATS ═══════════════ */
+.s-head{padding:28px 20px 16px}
+.s-title{font-family:‘Bebas Neue’,cursive;font-size:34px;letter-spacing:2px}
+.s-title em{font-style:normal;color:var(–orange)}
+.s-body{padding:0 20px 28px}
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.bs{
+background:var(–surface);border:1px solid var(–border);
+border-radius:14px;padding:16px;position:relative;overflow:hidden
+}
+.bs::before{content:’’;position:absolute;top:0;left:0;right:0;height:3px}
+.bs.a::before{background:linear-gradient(90deg,var(–orange),#FF8800)}
+.bs.b::before{background:linear-gradient(90deg,var(–green),var(–blue))}
+.bs.c::before{background:linear-gradient(90deg,var(–gold),var(–orange))}
+.bs.d::before{background:linear-gradient(90deg,var(–blue),#7C3AED)}
+.bs-n{font-family:‘Bebas Neue’,cursive;font-size:42px;line-height:1}
+.bs.a .bs-n{color:var(–orange)}
+.bs.b .bs-n{color:var(–green)}
+.bs.c .bs-n{color:var(–gold)}
+.bs.d .bs-n{color:var(–blue)}
+.bs-l{font-size:10px;color:var(–txt3);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+.chart-card{
+background:var(–surface);border:1px solid var(–border);
+border-radius:14px;padding:16px;margin-bottom:14px
+}
+.chart-title{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(–txt2);margin-bottom:14px}
+.barchart{display:flex;align-items:flex-end;gap:6px;height:80px}
+.bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:4px 4px 0 0;min-height:4px;transition:height .5s cubic-bezier(.34,1.56,.64,1)}
+.blbl{font-size:9px;color:var(–txt3);font-weight:700}
+
+.si{
+background:var(–surface);border:1px solid var(–border);
+border-radius:12px;padding:13px 14px;margin-bottom:8px;
+display:flex;align-items:center;gap:12px
+}
+.si-ico{font-size:20px}
+.si-info{flex:1}
+.si-t{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.si-m{font-size:11px;color:var(–txt3);margin-top:2px;font-weight:600}
+.si-s{font-family:‘Bebas Neue’,cursive;font-size:28px;color:var(–orange)}
+
+/* ═══════════════ VOICE BADGE ═══════════════ */
+#vbadge{
+position:fixed;top:12px;left:50%;transform:translateX(-50%);
+background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.35);
+border-radius:99px;padding:6px 16px;
+font-size:11px;font-weight:700;color:var(–green);letter-spacing:1px;
+z-index:1000;display:none;align-items:center;gap:6px;white-space:nowrap;
+max-width:90vw;overflow:hidden;text-overflow:ellipsis
+}
+#vbadge.on{display:flex}
+.vdot{width:6px;height:6px;border-radius:50%;background:var(–green);flex-shrink:0;animation:blink .7s infinite}
+
+/* ═══════════════ KEYFRAMES ═══════════════ */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pop{from{transform:scale(.35);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* ═══════════════ ENV MODE ═══════════════ */
+.env-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px 16px}
+.env-card{
+background:var(–surface);border:2px solid var(–border);
+border-radius:14px;padding:16px 14px;cursor:pointer;
+position:relative;overflow:hidden;
+transition:border-color .15s,transform .1s;text-align:center
+}
+.env-card:active{transform:scale(.97)}
+.env-card.sel{border-color:var(–orange);background:linear-gradient(135deg,rgba(255,85,0,.09),var(–surface))}
+.env-card.sel-blue{border-color:var(–blue);background:linear-gradient(135deg,rgba(0,176,255,.09),var(–surface))}
+.env-ico{font-size:30px;margin-bottom:8px}
+.env-name{font-family:‘Bebas Neue’,cursive;font-size:18px;letter-spacing:1px;color:var(–txt)}
+.env-desc{font-size:11px;color:var(–txt3);margin-top:4px;font-weight:600;line-height:1.4}
+.env-tag{
+display:inline-block;margin-top:8px;
+font-size:9px;font-weight:700;padding:2px 8px;
+border-radius:3px;letter-spacing:1px;text-transform:uppercase
+}
+.env-tag.casa{background:rgba(255,184,0,.15);color:var(–gold);border:1px solid rgba(255,184,0,.3)}
+.env-tag.cancha{background:rgba(0,176,255,.15);color:var(–blue);border:1px solid rgba(0,176,255,.3)}
+
+/* env mode HUD badge */
+.env-hud{
+position:absolute;top:58px;right:12px;
+background:rgba(0,0,0,.7);border-radius:8px;
+padding:5px 10px;font-size:10px;font-weight:700;
+letter-spacing:1px;text-transform:uppercase;display:none
+}
+
+/* ═══════════════ UTILS ═══════════════ */
+::-webkit-scrollbar{width:0}
+</style>
+
+</head>
+<body>
+
+<!-- Voice badge -->
+
+<div id="vbadge"><div class="vdot"></div><span id="vtxt">...</span></div>
+
+<!-- ═══════ HOME ═══════ -->
+
+<div id="home-scr" class="scr on">
+  <div class="h-hero">
+    <div class="brand">
+      <div class="brand-ball">🏀</div>
+      <div class="brand-txt">
+        <div>
+          <span class="brand-name">HOOPFORM</span>
+          <span class="badge-pro">PRO</span>
+        </div>
+        <div class="brand-sub">ENTRENADOR NBA CON IA</div>
+      </div>
+    </div>
+    <div class="live-pill"><div class="ldot"></div> ANÁLISIS EN VIVO</div>
+    <div class="h-title">LLEVA TU JUEGO<br>AL <em>SIGUIENTE NIVEL</em></div>
+    <div class="h-sub" style="margin-top:6px">Detección de postura · Voz en español · Feedback real</div>
+  </div>
+
+  <div class="stat-row" style="margin-top:14px">
+    <div class="sc"><div class="sc-n" id="h-sess">0</div><div class="sc-l">Sesiones</div></div>
+    <div class="sc"><div class="sc-n" id="h-shots">0</div><div class="sc-l">Tiros</div></div>
+    <div class="sc"><div class="sc-n" id="h-avg">—</div><div class="sc-l">Promedio</div></div>
+  </div>
+
+  <div class="sec">ENTORNO DE <em>JUEGO</em></div>
+  <div class="env-row">
+    <div class="env-card sel" id="env-casa" onclick="pickEnv('casa',this)">
+      <div class="env-ico">🏠</div>
+      <div class="env-name">CASA</div>
+      <div class="env-desc">Espacio reducido · Sin aro · Mecánica pura</div>
+      <span class="env-tag casa">MECÁNICA</span>
+    </div>
+    <div class="env-card" id="env-cancha" onclick="pickEnv('cancha',this)">
+      <div class="env-ico">🏟️</div>
+      <div class="env-name">CANCHA</div>
+      <div class="env-desc">Espacio completo · Con aro · Nivel pro</div>
+      <span class="env-tag cancha">NIVEL PRO</span>
+    </div>
+  </div>
+
+  <div class="sec">MODOS DE <em>ANÁLISIS</em></div>
+  <div class="mgrid">
+    <div class="mc sel" id="mc-shoot" onclick="pickMode('shoot',this)">
+      <span class="mc-badge pop">POPULAR</span>
+      <div class="mc-ico">🎯</div>
+      <div class="mc-name">TIRO</div>
+      <div class="mc-desc">Mecánica completa</div>
+    </div>
+    <div class="mc" id="mc-dribble" onclick="pickMode('dribble',this)">
+      <div class="mc-ico">⚡</div>
+      <div class="mc-name">DRIBBLE</div>
+      <div class="mc-desc">Ritmo y control</div>
+    </div>
+    <div class="mc" id="mc-defense" onclick="pickMode('defense',this)">
+      <div class="mc-ico">🛡️</div>
+      <div class="mc-name">DEFENSA</div>
+      <div class="mc-desc">Posición y desplazamiento</div>
+    </div>
+    <div class="mc" id="mc-ft" onclick="pickMode('ft',this)">
+      <span class="mc-badge nw">NUEVO</span>
+      <div class="mc-ico">🌊</div>
+      <div class="mc-name">FOLLOW-THROUGH</div>
+      <div class="mc-desc">Final del tiro</div>
+    </div>
+  </div>
+  <button class="cta" onclick="goTo('analyze')">⚡ INICIAR SESIÓN</button>
+</div>
+
+<!-- ═══════ ANALYZE ═══════ -->
+
+<div id="analyze-scr" class="scr">
+  <div class="errbox" id="errbox"></div>
+
+  <div class="a-idle" id="a-idle">
+    <div class="idle-ball">🏀</div>
+    <div class="idle-title">MODO <em id="idle-mode">TIRO</em></div>
+    <p class="idle-sub">La IA detecta tu cuerpo en tiempo real<br>y te habla en español para corregirte</p>
+    <div class="pills">
+      <div class="pill on" onclick="pillMode(this,'shoot')">🎯 Tiro</div>
+      <div class="pill" onclick="pillMode(this,'dribble')">⚡ Dribble</div>
+      <div class="pill" onclick="pillMode(this,'defense')">🛡️ Defensa</div>
+      <div class="pill" onclick="pillMode(this,'ft')">🌊 Follow-through</div>
+    </div>
+    <div class="pills" style="margin-bottom:20px">
+      <div class="pill on" id="apill-casa" onclick="pillEnv(this,'casa')">🏠 Casa</div>
+      <div class="pill" id="apill-cancha" onclick="pillEnv(this,'cancha')">🏟️ Cancha</div>
+    </div>
+    <button class="big-btn" onclick="startCam()">📷 INICIAR ANÁLISIS</button>
+  </div>
+
+  <div id="cam-wrap">
+    <video id="vid" playsinline muted></video>
+    <canvas id="cvs"></canvas>
+    <div id="loader"><div class="ring"></div><div class="ltxt">CARGANDO IA...</div></div>
+
+```
+<div class="hud-top">
+  <div class="hbox"><div class="hnum" id="score-num" style="color:var(--orange)">--</div><div class="hlbl">FORMA</div></div>
+  <div class="hmode" id="mode-badge">TIRO</div>
+  <div class="hbox"><div class="hnum" id="shot-count" style="color:var(--gold)">0</div><div class="hlbl" id="shot-lbl">TIROS</div></div>
+</div>
+
+<div class="bpm-box" id="bpm-box">
+  <div class="bpm-n" id="bpm-val">--</div>
+  <div class="bpm-l">BPM</div>
+</div>
+
+<div class="env-hud" id="env-hud"></div>
+
+<div id="sflash"><div class="stxt" id="stxt">🏀 ¡TIRO!</div></div>
+
+<div class="hud-bot">
+  <div class="hstatus" id="status-txt">DETECTANDO POSTURA...</div>
+  <div class="tagrow" id="tags"></div>
+</div>
+```
+
+  </div>
+
+  <div class="cam-ctrls" id="cam-ctrls" style="display:none">
+    <button class="ctrl danger" onclick="stopCam()">✕ DETENER</button>
+    <button class="ctrl prim" onclick="saveSession()">💾 GUARDAR</button>
+  </div>
+</div>
+
+<!-- ═══════ TRAIN ═══════ -->
+
+<div id="train-scr" class="scr">
+  <div class="t-head">
+    <div class="t-title">ENTRE<em>NAMIENTO</em></div>
+    <div class="t-sub">EJERCICIOS GUIADOS CON IA EN VIVO</div>
+  </div>
+  <div class="t-body">
+
+```
+<div id="adrill">
+  <div class="dcam" id="dcam">
+    <video id="dvid" playsinline muted></video>
+    <canvas id="dcvs"></canvas>
+    <div class="dcam-bot">
+      <div class="dcam-stat" id="dcam-stat" style="color:var(--orange)">DETECTANDO...</div>
+      <div class="tagrow" id="dtags"></div>
+    </div>
+  </div>
+  <div class="rep-row">
+    <div class="rep-big" id="rep-num">0</div>
+    <div class="rep-rt">
+      <div class="rep-name" id="drill-name-txt">EJERCICIO</div>
+      <div class="rep-tot" id="drill-prog">0 / 0</div>
+    </div>
+  </div>
+  <div class="prog-bg"><div class="prog-fill" id="drill-bar" style="width:0%"></div></div>
+  <div class="dinstr" id="drill-instr">...</div>
+  <div class="dbtns">
+    <button class="ddone" id="ddone-btn" onclick="repDone()">✓ REP COMPLETADA</button>
+    <button class="dstop" onclick="stopDrill()">✕ PARAR</button>
+  </div>
+</div>
+
+<div class="cat-lbl">🎯 TIRO</div>
+<div class="dc" onclick="startDrill('catch_shoot')"><div class="di s">🎯</div><div class="di-info"><div class="di-name">Catch &amp; Shoot</div><div class="di-meta">10 tiros · recepción y lanzamiento</div></div><span class="diff easy">FÁCIL</span></div>
+<div class="dc" onclick="startDrill('form_shoot')"><div class="di s">🏀</div><div class="di-info"><div class="di-name">Form Shooting</div><div class="di-meta">15 tiros · solo mecánica del brazo</div></div><span class="diff easy">FÁCIL</span></div>
+<div class="dc" onclick="startDrill('midrange')"><div class="di s">📐</div><div class="di-info"><div class="di-name">Mid-Range Series</div><div class="di-meta">20 tiros · media distancia</div></div><span class="diff med">MEDIO</span></div>
+<div class="dc" onclick="startDrill('stepback')"><div class="di s">💫</div><div class="di-info"><div class="di-name">Step-Back Jumper</div><div class="di-meta">12 tiros · estilo Luka / Harden</div></div><span class="diff hard">DIFÍCIL</span></div>
+
+<div class="cat-lbl">⚡ DRIBBLE</div>
+<div class="dc" onclick="startDrill('drib_basic')"><div class="di d">⚡</div><div class="di-info"><div class="di-name">Dribble Básico</div><div class="di-meta">60 seg · control ambas manos</div></div><span class="diff easy">FÁCIL</span></div>
+<div class="dc" onclick="startDrill('crossover')"><div class="di d">🔀</div><div class="di-info"><div class="di-name">Crossover Series</div><div class="di-meta">20 cruces · velocidad y control</div></div><span class="diff med">MEDIO</span></div>
+<div class="dc" onclick="startDrill('behind')"><div class="di d">🌀</div><div class="di-info"><div class="di-name">Behind-the-Back</div><div class="di-meta">15 reps · dribble por la espalda</div></div><span class="diff hard">DIFÍCIL</span></div>
+
+<div class="cat-lbl">🛡️ DEFENSA</div>
+<div class="dc" onclick="startDrill('def_stance')"><div class="di df">🛡️</div><div class="di-info"><div class="di-name">Posición Defensiva</div><div class="di-meta">45 seg · mantén la postura</div></div><span class="diff easy">FÁCIL</span></div>
+<div class="dc" onclick="startDrill('lateral')"><div class="di df">↔️</div><div class="di-info"><div class="di-name">Lateral Slides</div><div class="di-meta">3 series · desplazamiento lateral</div></div><span class="diff med">MEDIO</span></div>
+```
+
+  </div>
+</div>
+
+<!-- ═══════ STATS ═══════ -->
+
+<div id="stats-scr" class="scr">
+  <div class="s-head">
+    <div class="s-title">ESTA<em>DÍSTICAS</em></div>
+  </div>
+  <div class="s-body">
+    <div class="bgrid">
+      <div class="bs a"><div class="bs-n" id="st-sess">0</div><div class="bs-l">Sesiones</div></div>
+      <div class="bs b"><div class="bs-n" id="st-shots">0</div><div class="bs-l">Tiros</div></div>
+      <div class="bs c"><div class="bs-n" id="st-avg">—</div><div class="bs-l">Promedio</div></div>
+      <div class="bs d"><div class="bs-n" id="st-best">—</div><div class="bs-l">Mejor sesión</div></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">📈 PROGRESO DE FORMA</div>
+      <div class="barchart" id="bar-chart"><div style="color:var(--txt3);font-size:13px;font-weight:700;padding:20px 0;width:100%;text-align:center">Sin sesiones aún</div></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">📋 HISTORIAL</div>
+      <div id="sess-list"><div style="color:var(--txt3);font-size:13px;font-weight:700;padding:20px 0;text-align:center">No hay sesiones guardadas</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ NAV ═══════ -->
+
+<nav id="nav">
+  <button class="nb on" id="nb-home" onclick="goTo('home')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+    INICIO
+  </button>
+  <button class="nb" id="nb-analyze" onclick="goTo('analyze')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.89L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+    ANALIZAR
+  </button>
+  <button class="nb" id="nb-train" onclick="goTo('train')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    ENTRENAR
+  </button>
+  <button class="nb" id="nb-stats" onclick="goTo('stats')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+    STATS
+  </button>
+</nav>
+
+<!-- MediaPipe (defer para no bloquear render) -->
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous" defer></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous" defer></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous" defer></script>
+
+<script>
+'use strict';
+
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+let mode = 'shoot';
+let env = 'casa'; // 'casa' | 'cancha'
+let mainCam = null, mainPose = null;
+let drillCam = null, drillPose = null;
+let analyzing = false;
+
+// Session
+let sessShots = 0, sessScores = [], sessActive = false;
+
+// Shot state machine
+const shotSM = { phase: 'idle', cooldown: false };
+
+// Dribble
+const dribSM = { phase: 'up', reps: 0, lastRep: 0, hist: [] };
+let dribBpm = 0, lastDribT = 0;
+
+// Voice
+const voiceQ = [];
+let voiceBusy = false, lastVoice = 0;
+
+// Smoothing
+let smoothed = null;
+
+// Frame throttle
+let frameN = 0;
+
+// Persist
+let sessions = [];
+try { sessions = JSON.parse(localStorage.getItem('hf3') || '[]'); } catch(e) { sessions = []; }
+
+// Drill
+let activeDrill = null, drillReps = 0, drillTick = null;
+
+/* ════════════════════════════════════════
+   DRILL DATA
+════════════════════════════════════════ */
+const DRILLS = {
+  catch_shoot : { name:'Catch & Shoot',     reps:10, mode:'shoot',   icon:'🎯', instr:'Simula recibir un pase. Planta los pies y lanza. Rodillas dobladas, codo adentro, follow-through completo.' },
+  form_shoot  : { name:'Form Shooting',      reps:15, mode:'shoot',   icon:'🏀', instr:'Sin saltar. Trabaja solo la mecánica. Codo a 90°, muñeca snap al soltar.' },
+  midrange    : { name:'Mid-Range Series',   reps:20, mode:'shoot',   icon:'📐', instr:'Usa las piernas. El impulso nace desde las caderas, no solo el brazo.' },
+  stepback    : { name:'Step-Back Jumper',   reps:12, mode:'shoot',   icon:'💫', instr:'Paso atrás explosivo. Core firme. Equilibrio antes de lanzar.' },
+  drib_basic  : { name:'Dribble Básico',     reps:60, mode:'dribble', icon:'⚡', instr:'Alterna mano derecha e izquierda. Vista al frente. Posición baja.', timer:true },
+  crossover   : { name:'Crossover Series',   reps:20, mode:'dribble', icon:'🔀', instr:'Cruza el balón explosivo y bajo. No debe subir más que la cadera.' },
+  behind      : { name:'Behind-the-Back',    reps:15, mode:'dribble', icon:'🌀', instr:'Pasa el balón por la espalda. Empieza lento, luego acelera.' },
+  def_stance  : { name:'Posición Defensiva', reps:45, mode:'defense', icon:'🛡️', instr:'Rodillas dobladas, espalda recta, manos activas. Pies más anchos que los hombros.', timer:true },
+  lateral     : { name:'Lateral Slides',     reps:3,  mode:'defense', icon:'↔️', instr:'5 pasos rápidos a cada lado. No cruces los pies. Mantén la posición baja.' },
+};
+
+/* ════════════════════════════════════════
+   ENV THRESHOLDS
+   Casa  = lenient (practice at home, no hoop)
+   Cancha = strict  (NBA-level, full court)
+════════════════════════════════════════ */
+const THRESH = {
+  casa: {
+    elbowMin: 60,  elbowMax: 155,
+    kneeMax: 174,  flare: 0.13,
+    dribKneeMax: 172, dribBase: 0.11,
+    defKneeMax: 170, defBase: 0.14,
+    ftExt: 140
+  },
+  cancha: {
+    elbowMin: 70,  elbowMax: 140,
+    kneeMax: 165,  flare: 0.10,
+    dribKneeMax: 162, dribBase: 0.14,
+    defKneeMax: 158, defBase: 0.18,
+    ftExt: 150
+  }
+};
+function LM(lm, i) { return lm[i]; }
+
+function ang(a, b, c) {
+  const ax = a.x - b.x, ay = a.y - b.y;
+  const cx = c.x - b.x, cy = c.y - b.y;
+  const dot = ax * cx + ay * cy;
+  const mag = Math.hypot(ax, ay) * Math.hypot(cx, cy);
+  if (mag === 0) return 0;
+  return Math.acos(Math.max(-1, Math.min(1, dot / mag))) * 180 / Math.PI;
+}
+
+/* ════════════════════════════════════════
+   SMOOTHING  (exponential, α=0.7)
+════════════════════════════════════════ */
+function smooth(lm) {
+  if (!smoothed) { smoothed = lm.map(p => ({ ...p })); return smoothed; }
+  const A = 0.7;
+  smoothed = lm.map((p, i) => ({
+    ...p,
+    x: smoothed[i].x * A + p.x * (1 - A),
+    y: smoothed[i].y * A + p.y * (1 - A),
+  }));
+  return smoothed;
+}
+
+/* ════════════════════════════════════════
+   VISIBILITY GATE
+════════════════════════════════════════ */
+function visible(lm) {
+  return [11,12,13,14,15,16,23,24,25,26,27,28].every(i => lm[i] && lm[i].visibility > 0.5);
+}
+
+/* ════════════════════════════════════════
+   VOICE  (queued, es-ES)
+════════════════════════════════════════ */
+function speak(txt) {
+  if (!window.speechSynthesis) return;
+  // Avoid duplicate consecutive messages
+  if (voiceQ.length && voiceQ[voiceQ.length - 1] === txt) return;
+  voiceQ.push(txt);
+  if (!voiceBusy) _flush();
+}
+
+function _flush() {
+  if (!voiceQ.length) { voiceBusy = false; return; }
+  voiceBusy = true;
+  const txt = voiceQ.shift();
+  const u = new SpeechSynthesisUtterance(txt);
+  u.lang = 'es-ES'; u.rate = 0.97; u.pitch = 1; u.volume = 1;
+  // Pick Spanish voice if available
+  const voices = speechSynthesis.getVoices();
+  const sv = voices.find(v => v.lang.startsWith('es'));
+  if (sv) u.voice = sv;
+  const vb = document.getElementById('vbadge');
+  const vt = document.getElementById('vtxt');
+  vb.classList.add('on'); vt.textContent = txt;
+  u.onend = () => { vb.classList.remove('on'); voiceBusy = false; setTimeout(_flush, 150); };
+  u.onerror = () => { voiceBusy = false; _flush(); };
+  speechSynthesis.speak(u);
+}
+
+/* ════════════════════════════════════════
+   SHOT DETECTION  (state machine)
+════════════════════════════════════════ */
+function detectShot(lm) {
+  if (mode !== 'shoot' && mode !== 'ft') return false;
+  const sh = LM(lm, 12), el = LM(lm, 14), wr = LM(lm, 16);
+  const ea = ang(sh, el, wr);
+  const wAbove = wr.y < sh.y;
+  const ext = ea > 145;
+
+  switch (shotSM.phase) {
+    case 'idle': if (ea > 65 && ea < 120) shotSM.phase = 'load'; break;
+    case 'load': if (wAbove) shotSM.phase = 'lift'; break;
+    case 'lift':
+      if (ext) { shotSM.phase = 'release'; shotSM._t = Date.now(); }
+      break;
+    case 'release':
+      if (Date.now() - shotSM._t > 200) {
+        shotSM.phase = 'idle';
+        if (!shotSM.cooldown) {
+          shotSM.cooldown = true;
+          setTimeout(() => { shotSM.cooldown = false; }, 1800);
+          return true;
+        }
+      }
+      break;
+  }
+  return false;
+}
+
+/* ════════════════════════════════════════
+   DRIBBLE DETECTION  (up/down wave)
+════════════════════════════════════════ */
+function detectDribble(lm) {
+  if (mode !== 'dribble') return;
+  const wr = LM(lm, 16);
+  const hist = dribSM.hist;
+  hist.push(wr.y);
+  if (hist.length > 10) hist.shift();
+  if (hist.length < 6) return;
+  const prev = hist[hist.length - 2];
+  const curr = hist[hist.length - 1];
+  if (dribSM.phase === 'up' && curr > prev + 0.011) dribSM.phase = 'down';
+  else if (dribSM.phase === 'down' && curr < prev - 0.011) {
+    const now = Date.now();
+    if (now - dribSM.lastRep > 280) {
+      dribSM.lastRep = now;
+      dribSM.reps++;
+      document.getElementById('shot-count').textContent = dribSM.reps;
+      if (lastDribT > 0) {
+        const iv = now - lastDribT;
+        if (iv > 180 && iv < 2000) {
+          dribBpm = Math.round(60000 / iv);
+          document.getElementById('bpm-val').textContent = dribBpm;
+        }
+      }
+      lastDribT = now;
+      if (now - lastVoice > 3000) {
+        lastVoice = now;
+        const msgs = ['Buen ritmo','Controla el balón','Más bajo el dribble','Cabeza arriba'];
+        speak(msgs[Math.floor(Math.random() * msgs.length)]);
+      }
+    }
+    dribSM.phase = 'up';
+  }
+}
+
+/* ════════════════════════════════════════
+   ANALYSIS ENGINES
+════════════════════════════════════════ */
+function analyzeShoot(lm) {
+  const g = [], w = [], b = []; let s = 10;
+  const T = THRESH[env];
+  const rS=LM(lm,12),lS=LM(lm,11),rE=LM(lm,14),rW=LM(lm,16);
+  const rH=LM(lm,24),lH=LM(lm,23),rK=LM(lm,26),lK=LM(lm,25),rA=LM(lm,28),lA=LM(lm,27);
+  const ea = ang(rS, rE, rW);
+  if (ea < T.elbowMin)       { b.push('Codo cerrado'); s -= 2.5; }
+  else if (ea > T.elbowMax)  { w.push('Relaja el brazo'); s -= 1; }
+  else                         g.push('Codo bien');
+  if (Math.abs(rE.x - rS.x) > T.flare) { b.push('Codo hacia afuera'); s -= 2; }
+  const kk = (ang(rH,rK,rA) + ang(lH,lK,lA)) / 2;
+  if (kk > T.kneeMax)        { b.push('Dobla las rodillas'); s -= 2.5; }
+  else                         g.push('Base buena');
+  if (Math.abs(lS.y - rS.y) > 0.07) { w.push('Hombros desnivelados'); s -= 1; }
+  if (rW.y < rS.y - 0.04)   g.push('Release alto');
+  else                       w.push('Sube la muñeca');
+  return { g, w, b, s: Math.max(0, Math.min(10, s)), ea, kk };
+}
+
+function analyzeDribble(lm) {
+  const g = [], w = [], b = []; let s = 10;
+  const T = THRESH[env];
+  const rH=LM(lm,24),lH=LM(lm,23),rK=LM(lm,26),lK=LM(lm,25),rA=LM(lm,28),lA=LM(lm,27);
+  const rW=LM(lm,16),lW=LM(lm,15),nose=LM(lm,0);
+  const kk = (ang(rH,rK,rA) + ang(lH,lK,lA)) / 2;
+  if (kk > T.dribKneeMax)        { b.push('Agáchate más'); s -= 3; }
+  else if (kk > T.dribKneeMax - 12) { w.push('Baja un poco más'); s -= 1; }
+  else                               g.push('Posición baja');
+  if (Math.abs(lH.x - rH.x) < T.dribBase) { b.push('Base más ancha'); s -= 2; }
+  else                                       g.push('Base');
+  const handH = Math.min(rW.y, lW.y);
+  if (handH > 0.48) g.push('Manos bajas'); else w.push('Baja las manos');
+  const ba = ang(LM(lm,11), LM(lm,23), LM(lm,25));
+  if (ba < 158) w.push('Espalda recta'); else g.push('Espalda');
+  if (nose.visibility > 0.5) g.push('Vista al frente');
+  return { g, w, b, s: Math.max(0, Math.min(10, s)), kk };
+}
+
+function analyzeDefense(lm) {
+  const g = [], w = [], b = []; let s = 10;
+  const T = THRESH[env];
+  const rH=LM(lm,24),lH=LM(lm,23),rK=LM(lm,26),lK=LM(lm,25),rA=LM(lm,28),lA=LM(lm,27);
+  const rW=LM(lm,16),lW=LM(lm,15);
+  const kk = (ang(rH,rK,rA) + ang(lH,lK,lA)) / 2;
+  if (kk > T.defKneeMax)          { b.push('Baja la posición'); s -= 3; }
+  else if (kk > T.defKneeMax - 14){ w.push('Más bajo aún'); s -= 1; }
+  else                               g.push('Posición defensiva');
+  if (Math.abs(lA.x - rA.x) < T.defBase) { b.push('Pies más separados'); s -= 2; }
+  else                                      g.push('Base ancha');
+  if (Math.abs(lW.x - rW.x) > 0.27) g.push('Brazos activos');
+  else                               w.push('Extiende los brazos');
+  return { g, w, b, s: Math.max(0, Math.min(10, s)), kk };
+}
+
+function analyzeFollowThrough(lm) {
+  const g = [], w = [], b = []; let s = 10;
+  const T = THRESH[env];
+  const rS=LM(lm,12),rE=LM(lm,14),rW=LM(lm,16);
+  const rH=LM(lm,24),lH=LM(lm,23),rK=LM(lm,26),lK=LM(lm,25),rA=LM(lm,28),lA=LM(lm,27);
+  if (rW.y > rE.y)   g.push('Follow-through');
+  else               { b.push('Termina el tiro'); s -= 3; }
+  const ae = ang(rS, rE, rW);
+  if (ae > T.ftExt)  g.push('Brazo extendido');
+  else               { w.push('Extiende el brazo'); s -= 1.5; }
+  if (rW.y < rS.y)   g.push('Mano arriba');
+  else               { b.push('Mano arriba tras tiro'); s -= 2; }
+  const kk = (ang(rH,rK,rA) + ang(lH,lK,lA)) / 2;
+  if (kk < 174) g.push('Balance'); else { w.push('Mantén balance'); s -= 1; }
+  return { g, w, b, s: Math.max(0, Math.min(10, s)), kk, ae };
+}
+
+function runAnalysis(lm) {
+  switch (mode) {
+    case 'shoot'  : return analyzeShoot(lm);
+    case 'dribble': return analyzeDribble(lm);
+    case 'defense': return analyzeDefense(lm);
+    case 'ft'     : return analyzeFollowThrough(lm);
+    default       : return analyzeShoot(lm);
+  }
+}
+
+/* ════════════════════════════════════════
+   VOICE FEEDBACK
+════════════════════════════════════════ */
+const ERR_VOICE = {
+  'Codo cerrado'        : 'Abre el codo debajo del balón',
+  'Codo hacia afuera'   : 'Codo adentro, apunta al aro',
+  'Dobla las rodillas'  : 'Usa más las piernas',
+  'Agáchate más'        : 'Bájate más para el dribble',
+  'Baja la posición'    : 'Baja más la posición defensiva',
+  'Pies más separados'  : 'Separa más los pies',
+  'Termina el tiro'     : 'Termina el follow-through',
+  'Mano arriba tras tiro':'Mantén la mano arriba',
+  'Base más ancha'      : 'Abre más la base',
+};
+const PRAISE = ['Excelente tiro','Mecánica profesional','Muy buena forma','Perfecto'];
+
+function voiceFB(r) {
+  const now = Date.now();
+  if (now - lastVoice < 4200) return;
+  lastVoice = now;
+  if (r.b.length) {
+    speak(ERR_VOICE[r.b[0]] || r.b[0]);
+  } else if (r.s >= 9) {
+    speak(PRAISE[Math.floor(Math.random() * PRAISE.length)]);
+  } else if (r.w.length && r.s >= 7) {
+    speak(r.w[0]);
+  }
+}
+
+/* ════════════════════════════════════════
+   DRAW SKELETON
+════════════════════════════════════════ */
+const PAIRS = [
+  [11,12],[11,13],[13,15],[12,14],[14,16],
+  [11,23],[12,24],[23,24],
+  [23,25],[25,27],[24,26],[26,28]
+];
+// Which indices belong to shooting arm / legs
+const RARM_IDX = new Set([12,14,16]);
+const LEG_IDX  = new Set([25,26,27,28]);
+
+function drawSkel(lm, result, canvas) {
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const W = canvas.width, H = canvas.height;
+  const sc   = result.s >= 8 ? '#00E676' : result.s >= 5 ? '#FF8800' : '#FF1744';
+  const bok  = result.ea ? (result.ea >= 65 && result.ea <= 140) : true;
+  const kok  = result.kk ? result.kk < 160 : true;
+
+  // Connections
+  ctx.lineWidth = 5; ctx.lineCap = 'round';
+  PAIRS.forEach(([a, b]) => {
+    const pa = lm[a], pb = lm[b];
+    if (!pa || !pb || pa.visibility < 0.38 || pb.visibility < 0.38) return;
+    let col = sc;
+    if (RARM_IDX.has(a) || RARM_IDX.has(b)) col = bok ? '#00E676' : '#FF1744';
+    if (LEG_IDX.has(a)  || LEG_IDX.has(b))  col = kok ? '#00E676' : '#FF1744';
+    ctx.beginPath();
+    ctx.moveTo(pa.x * W, pa.y * H);
+    ctx.lineTo(pb.x * W, pb.y * H);
+    ctx.strokeStyle = col;
+    ctx.shadowColor = col; ctx.shadowBlur = 14;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  });
+
+  // Joints
+  lm.forEach((p, i) => {
+    if (p.visibility < 0.38) return;
+    let dc = '#60a5fa';
+    if (RARM_IDX.has(i)) dc = bok ? '#00E676' : '#FF1744';
+    else if (i === 11 || i === 13 || i === 15) dc = sc;
+    else if (LEG_IDX.has(i)) dc = kok ? '#00E676' : '#FF1744';
+    ctx.beginPath(); ctx.arc(p.x * W, p.y * H, 7, 0, Math.PI * 2);
+    ctx.fillStyle = dc; ctx.shadowColor = dc; ctx.shadowBlur = 16; ctx.fill(); ctx.shadowBlur = 0;
+    ctx.strokeStyle = 'rgba(255,255,255,.65)'; ctx.lineWidth = 1.5; ctx.stroke();
+  });
+
+  // Angle labels
+  function drawLabel(txt, p, col) {
+    if (!p || p.visibility < 0.4) return;
+    const x = p.x * W, y = p.y * H;
+    ctx.save(); ctx.font = 'bold 13px Rajdhani,sans-serif';
+    const tw = ctx.measureText(txt).width + 12;
+    ctx.fillStyle = 'rgba(0,0,0,.72)';
+    ctx.beginPath(); ctx.roundRect(x - tw / 2, y - 22, tw, 20, 4); ctx.fill();
+    ctx.fillStyle = col; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(txt, x, y - 12); ctx.restore();
+  }
+  if (result.ea != null) drawLabel(Math.round(result.ea) + '°', lm[14], bok ? '#00E676' : '#FF1744');
+  if (result.kk != null) drawLabel(Math.round(result.kk) + '°', lm[26], kok ? '#00E676' : '#FF1744');
+}
+
+/* ════════════════════════════════════════
+   UPDATE HUD
+════════════════════════════════════════ */
+function setHUD(r, scoreId, statusId, tagsId) {
+  const sn = document.getElementById(scoreId);
+  sn.textContent = r.s.toFixed(0);
+  sn.style.color = r.s >= 8 ? '#00E676' : r.s >= 5 ? '#FF8800' : '#FF1744';
+  const st = document.getElementById(statusId);
+  if (!r.b.length && !r.w.length) { st.textContent = '🔥 FORMA PERFECTA'; st.style.color = '#00E676'; }
+  else if (r.b.length)            { st.textContent = '⚠ ' + r.b[0].toUpperCase(); st.style.color = '#FF1744'; }
+  else                            { st.textContent = '▲ ' + r.w[0].toUpperCase(); st.style.color = '#FF8800'; }
+  document.getElementById(tagsId).innerHTML = [
+    ...r.b.map(t => `<span class="tag er">✗ ${t}</span>`),
+    ...r.w.map(t => `<span class="tag wn">▲ ${t}</span>`),
+    ...r.g.map(t => `<span class="tag ok">✓ ${t}</span>`),
+  ].join('');
+}
+
+/* ════════════════════════════════════════
+   MAIN CAMERA
+════════════════════════════════════════ */
+async function startCam() {
+  if (analyzing) return;
+  analyzing = true;
+  const MNAMES = { shoot:'TIRO', dribble:'DRIBBLE', defense:'DEFENSA', ft:'FOLLOW-THROUGH' };
+  document.getElementById('a-idle').style.display = 'none';
+  document.getElementById('cam-wrap').style.display = 'block';
+  document.getElementById('cam-ctrls').style.display = 'flex';
+  document.getElementById('loader').style.display = 'flex';
+  document.getElementById('errbox').style.display = 'none';
+  document.getElementById('mode-badge').textContent = MNAMES[mode];
+  document.getElementById('bpm-box').style.display = mode === 'dribble' ? 'block' : 'none';
+  document.getElementById('shot-lbl').textContent = mode === 'dribble' ? 'BOTES' : 'TIROS';
+  sessShots = 0; sessScores = []; sessActive = true;
+  document.getElementById('shot-count').textContent = '0';
+  smoothed = null; frameN = 0;
+  shotSM.phase = 'idle'; shotSM.cooldown = false;
+  dribSM.phase = 'up'; dribSM.reps = 0; dribSM.hist = []; lastDribT = 0;
+
+  try {
+    mainPose = new Pose({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}` });
+    mainPose.setOptions({ modelComplexity: 1, smoothLandmarks: true, enableSegmentation: false, minDetectionConfidence: 0.6, minTrackingConfidence: 0.6 });
+    mainPose.onResults(onMainResult);
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } } });
+    const vid = document.getElementById('vid');
+    vid.srcObject = stream; await vid.play();
+    mainCam = new Camera(vid, {
+      onFrame: async () => {
+        frameN++;
+        if (frameN % 2 !== 0) return; // process every 2nd frame for performance
+        await mainPose.send({ image: vid });
+      },
+      width: 640, height: 480
+    });
+    mainCam.start();
+  } catch (err) {
+    analyzing = false;
+    document.getElementById('loader').style.display = 'none';
+    const eb = document.getElementById('errbox');
+    eb.style.display = 'block';
+    eb.textContent = '⚠️ No se pudo acceder a la cámara. Abre en Safari y permite el acceso.';
+    document.getElementById('a-idle').style.display = 'flex';
+    document.getElementById('cam-wrap').style.display = 'none';
+    document.getElementById('cam-ctrls').style.display = 'none';
+  }
+}
+
+function onMainResult(res) {
+  const lo = document.getElementById('loader');
+  if (lo.style.display !== 'none') {
+    lo.style.display = 'none';
+    speak('Análisis iniciado. ¡A entrenar!');
+  }
+  const vid = document.getElementById('vid'), cvs = document.getElementById('cvs');
+  cvs.width = vid.videoWidth || 640; cvs.height = vid.videoHeight || 480;
+
+  if (!res.poseLandmarks || !visible(res.poseLandmarks)) {
+    document.getElementById('status-txt').textContent = '👀 MUÉVETE AL CENTRO';
+    document.getElementById('tags').innerHTML = '';
+    document.getElementById('score-num').textContent = '--';
+    return;
+  }
+  const lm = smooth(res.poseLandmarks);
+  const r = runAnalysis(lm);
+  drawSkel(lm, r, cvs);
+  setHUD(r, 'score-num', 'status-txt', 'tags');
+  voiceFB(r);
+  detectDribble(lm);
+  sessScores.push(r.s);
+
+  if (detectShot(lm)) {
+    sessShots++;
+    document.getElementById('shot-count').textContent = sessShots;
+    const fl = document.getElementById('sflash');
+    document.getElementById('stxt').textContent = mode === 'ft' ? '🌊 FOLLOW!' : '🏀 ¡TIRO!';
+    fl.classList.add('on');
+    setTimeout(() => fl.classList.remove('on'), 600);
+    speak('Tiro detectado');
+  }
+}
+
+function stopCam() {
+  analyzing = false;
+  if (mainCam) { mainCam.stop(); mainCam = null; }
+  if (mainPose) { mainPose.close(); mainPose = null; }
+  const vid = document.getElementById('vid');
+  if (vid.srcObject) { vid.srcObject.getTracks().forEach(t => t.stop()); vid.srcObject = null; }
+  document.getElementById('a-idle').style.display = 'flex';
+  document.getElementById('cam-wrap').style.display = 'none';
+  document.getElementById('cam-ctrls').style.display = 'none';
+  sessActive = false;
+  speechSynthesis && speechSynthesis.cancel();
+  document.getElementById('vbadge').classList.remove('on');
+}
+
+function saveSession() {
+  if (!sessScores.length) { stopCam(); return; }
+  const avg = sessScores.reduce((a, b) => a + b, 0) / sessScores.length;
+  const MNAMES = { shoot:'Tiro', dribble:'Dribble', defense:'Defensa', ft:'Follow-through' };
+  sessions.unshift({
+    id: Date.now(), mode, modeName: MNAMES[mode],
+    shots: sessShots, avgScore: +avg.toFixed(1),
+    maxScore: +Math.max(...sessScores).toFixed(1),
+    date: new Date().toLocaleDateString('es', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' }),
+    reps: sessScores.length
+  });
+  if (sessions.length > 50) sessions.pop();
+  try { localStorage.setItem('hf3', JSON.stringify(sessions)); } catch(e) {}
+  speak('Sesión guardada. Puntuación promedio ' + avg.toFixed(1));
+  stopCam(); updateHomeStats();
+}
+
+/* ════════════════════════════════════════
+   DRILL CAMERA
+════════════════════════════════════════ */
+async function startDrillCam(dMode) {
+  const dw = document.getElementById('dcam');
+  dw.style.display = 'block';
+  try {
+    drillPose = new Pose({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}` });
+    drillPose.setOptions({ modelComplexity: 1, smoothLandmarks: true, enableSegmentation: false, minDetectionConfidence: 0.55, minTrackingConfidence: 0.55 });
+    drillPose.onResults(res => onDrillResult(res, dMode));
+    const vid = document.getElementById('dvid');
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 480 }, height: { ideal: 360 } } });
+    vid.srcObject = stream; await vid.play();
+    drillCam = new Camera(vid, {
+      onFrame: async () => { await drillPose.send({ image: vid }); },
+      width: 480, height: 360
+    });
+    drillCam.start();
+  } catch(e) { document.getElementById('dcam').style.display = 'none'; }
+}
+
+function onDrillResult(res, dMode) {
+  const vid = document.getElementById('dvid'), cvs = document.getElementById('dcvs');
+  cvs.width = vid.videoWidth || 480; cvs.height = vid.videoHeight || 360;
+  if (!res.poseLandmarks || !visible(res.poseLandmarks)) return;
+  const lm = smooth(res.poseLandmarks);
+  // Temporarily override mode for analysis
+  const prev = mode; mode = dMode;
+  const r = runAnalysis(lm);
+  mode = prev;
+  drawSkel(lm, r, cvs);
+  // Update drill HUD
+  const st = document.getElementById('dcam-stat');
+  if (!r.b.length && !r.w.length) { st.textContent = '🔥 FORMA PERFECTA'; st.style.color = '#00E676'; }
+  else if (r.b.length)            { st.textContent = '⚠ ' + r.b[0].toUpperCase(); st.style.color = '#FF1744'; }
+  else                            { st.textContent = '▲ ' + r.w[0].toUpperCase(); st.style.color = '#FF8800'; }
+  document.getElementById('dtags').innerHTML = [
+    ...r.b.map(t => `<span class="tag er">✗ ${t}</span>`),
+    ...r.w.map(t => `<span class="tag wn">▲ ${t}</span>`),
+    ...r.g.map(t => `<span class="tag ok">✓ ${t}</span>`),
+  ].join('');
+  // Voice feedback for drill (separate cooldown)
+  const now = Date.now();
+  if (now - lastVoice > 4000) {
+    lastVoice = now;
+    if (r.b.length) speak(ERR_VOICE[r.b[0]] || r.b[0]);
+    else if (r.s >= 9) speak(PRAISE[Math.floor(Math.random() * PRAISE.length)]);
+  }
+}
+
+function stopDrillCam() {
+  if (drillCam) { drillCam.stop(); drillCam = null; }
+  if (drillPose) { drillPose.close(); drillPose = null; }
+  const vid = document.getElementById('dvid');
+  if (vid.srcObject) { vid.srcObject.getTracks().forEach(t => t.stop()); vid.srcObject = null; }
+  document.getElementById('dcam').style.display = 'none';
+}
+
+/* ════════════════════════════════════════
+   DRILL LOGIC
+════════════════════════════════════════ */
+function startDrill(key) {
+  const d = DRILLS[key]; if (!d) return;
+  activeDrill = { key, ...d }; drillReps = 0;
+  const el = id => document.getElementById(id);
+  el('adrill').style.display = 'block';
+  el('drill-name-txt').textContent = d.icon + ' ' + d.name;
+  el('drill-prog').textContent = '0 / ' + d.reps;
+  el('rep-num').textContent = '0';
+  el('drill-instr').textContent = d.instr;
+  el('drill-bar').style.width = '0%';
+  el('ddone-btn').style.display = d.timer ? 'none' : 'block';
+  startDrillCam(d.mode);
+  if (d.timer) {
+    let rem = d.reps;
+    el('rep-num').textContent = rem;
+    el('drill-prog').textContent = rem + 's';
+    speak(d.name + ' iniciado. ' + d.instr);
+    drillTick = setInterval(() => {
+      rem--;
+      el('rep-num').textContent = rem;
+      el('drill-prog').textContent = rem + 's';
+      el('drill-bar').style.width = ((d.reps - rem) / d.reps * 100) + '%';
+      if (rem <= 0) { clearInterval(drillTick); drillTick = null; speak('¡Ejercicio completado!'); stopDrill(); }
+      else if (rem === 10) speak('Diez segundos restantes');
+    }, 1000);
+  } else {
+    speak(d.name + '. ' + d.instr);
+  }
+  el('adrill').scrollIntoView({ behavior: 'smooth' });
+}
+
+function repDone() {
+  if (!activeDrill || activeDrill.timer) return;
+  drillReps++;
+  const t = activeDrill.reps;
+  document.getElementById('rep-num').textContent = drillReps;
+  document.getElementById('drill-prog').textContent = drillReps + ' / ' + t;
+  document.getElementById('drill-bar').style.width = (drillReps / t * 100) + '%';
+  if (drillReps >= t) { speak('¡Serie completada! ¡Excelente!'); setTimeout(stopDrill, 1400); }
+  else if (drillReps % 5 === 0) speak(drillReps + ' de ' + t + '. ¡Sigue así!');
+}
+
+function stopDrill() {
+  if (drillTick) { clearInterval(drillTick); drillTick = null; }
+  stopDrillCam();
+  activeDrill = null; drillReps = 0;
+  document.getElementById('adrill').style.display = 'none';
+}
+
+/* ════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════ */
+const SCREENS = ['home', 'analyze', 'train', 'stats'];
+
+function goTo(name) {
+  SCREENS.forEach(s => {
+    document.getElementById(s + '-scr').classList.toggle('on', s === name);
+    document.getElementById('nb-' + s).classList.toggle('on', s === name);
+  });
+  if (name === 'stats') renderStats();
+  if (name === 'home')  updateHomeStats();
+}
+
+function pickMode(m, el) {
+  mode = m;
+  document.querySelectorAll('.mc').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function pillMode(el, m) {
+  mode = m;
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  const N = { shoot:'TIRO', dribble:'DRIBBLE', defense:'DEFENSA', ft:'FOLLOW-THROUGH' };
+  document.getElementById('idle-mode').textContent = N[m];
+}
+
+/* ════════════════════════════════════════
+   STATS
+════════════════════════════════════════ */
+function updateHomeStats() {
+  document.getElementById('h-sess').textContent = sessions.length;
+  document.getElementById('h-shots').textContent = sessions.reduce((a, s) => a + (s.shots || 0), 0);
+  if (sessions.length) {
+    const avg = sessions.reduce((a, s) => a + s.avgScore, 0) / sessions.length;
+    document.getElementById('h-avg').textContent = avg.toFixed(1);
+  }
+}
+
+function renderStats() {
+  const total = sessions.reduce((a, s) => a + (s.shots || 0), 0);
+  document.getElementById('st-sess').textContent  = sessions.length;
+  document.getElementById('st-shots').textContent = total;
+  if (sessions.length) {
+    const avg  = sessions.reduce((a, s) => a + s.avgScore, 0) / sessions.length;
+    const best = Math.max(...sessions.map(s => s.avgScore));
+    document.getElementById('st-avg').textContent  = avg.toFixed(1);
+    document.getElementById('st-best').textContent = best.toFixed(1);
+  }
+  // Bar chart
+  const last7 = sessions.slice(0, 7).reverse();
+  const chart = document.getElementById('bar-chart');
+  if (last7.length) {
+    chart.innerHTML = last7.map(s => {
+      const h   = (s.avgScore / 10) * 78;
+      const col = s.avgScore >= 8 ? '#00E676' : s.avgScore >= 6 ? '#FF8800' : '#FF1744';
+      return `<div class="bcol"><div class="bar" style="height:${h}px;background:${col};box-shadow:0 0 10px ${col}55"></div><div class="blbl">${s.avgScore}</div></div>`;
+    }).join('');
+  }
+  // Session list
+  const ICONS = { shoot:'🎯', dribble:'⚡', defense:'🛡️', ft:'🌊' };
+  const list = document.getElementById('sess-list');
+  if (sessions.length) {
+    list.innerHTML = sessions.slice(0, 10).map(s => `
+      <div class="si">
+        <span class="si-ico">${ICONS[s.mode] || '🏀'}</span>
+        <div class="si-info">
+          <div class="si-t">${s.modeName} · ${s.shots} tiros</div>
+          <div class="si-m">${s.date} · ${s.reps} análisis</div>
+        </div>
+        <div class="si-s">${s.avgScore}</div>
+      </div>`).join('');
+  }
+}
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+// Warm up voices list
+if (window.speechSynthesis) {
+  speechSynthesis.getVoices();
+  speechSynthesis.addEventListener('voiceschanged', () => speechSynthesis.getVoices());
+}
+updateHomeStats();
+</script>
+
+</body>
+</html>
